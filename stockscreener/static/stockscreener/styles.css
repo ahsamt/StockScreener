@@ -1,0 +1,7 @@
+:root {
+  background-color: antiquewhite;
+}
+
+body {
+  background: var(--background-color);
+}
