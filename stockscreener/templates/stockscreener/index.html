@@ -1,1 +1,9 @@
-{% extends "stockscreener/layout.html" %} {% block body %} Hello {% endblock %}
+{% extends "stockscreener/layout.html" %} {% load static %}{% block body %}
+
+<form action="" method="post">
+  {% csrf_token %} {{ stockForm }}
+  <button type="submit">Get Results</button>
+</form>
+<br />
+
+{{ fig | safe }} {% endblock %}
