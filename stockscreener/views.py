@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.db import IntegrityError
-from .models import User
+from .models import User, Search
 from django.conf import settings
 from django import forms
 import os
@@ -26,7 +26,8 @@ def index(request):
     if request.method == "GET":
         stockForm = StockForm()
         if user.is_authenticated:
-            pastSearches = set(user.past_searches) 
+            pastSearches=user.searches.all()  
+            pastSearches=sorted(pastSearches, key = lambda p: (p.date), reverse=True)[:5] 
             return render(request, "stockscreener/index.html", {"stockForm": stockForm, 'pastSearches':pastSearches})
         else:
             return render (request, "stockscreener/index.html", {"stockForm": stockForm})
@@ -58,9 +59,9 @@ def index(request):
                 graph = fig.to_html(full_html=False, default_height=500, default_width=700)
 
                 if user.is_authenticated:
-                    user.past_searches.append(stock)
-                    user.save()
-                    print(user.past_searches)
+                    search = Search(searcher=user, stock=stock)
+                    search.save()
+                    
         return render(request, "stockscreener/index.html", {"stockForm": stockForm, "graph":graph})
 
 def login_view(request):
