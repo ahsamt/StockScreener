@@ -21,12 +21,14 @@ class StockForm(forms.Form):
 
 
 def index(request):
-    
+    user = request.user
     if request.method == "GET":
         stockForm = StockForm()
-             
-        return render(request, "stockscreener/index.html", {"stockForm": stockForm})
-   
+        if user.is_authenticated:
+            pastSearches = set(user.past_searches) 
+            return render(request, "stockscreener/index.html", {"stockForm": stockForm, 'pastSearches':pastSearches})
+        else:
+            return render (request, "stockscreener/index.html", {"stockForm": stockForm})
     if request.method == "POST":
         if 'stock' in request.POST:
             stockForm = StockForm(request.POST) 
@@ -46,11 +48,15 @@ def index(request):
 
                 
                 fig = go.Figure()
-                fig.add_trace(go.Scatter(name="Graph", x=dates, y=close ))
+                fig.add_trace(go.Scatter(name="Graph", x=dates, y=close))
+                fig.update_layout(title = f"{stock} trading over the past 6 months")
 
                 graph = fig.to_html(full_html=False, default_height=500, default_width=700)
 
-                
+                if user.is_authenticated:
+                    user.past_searches.append(stock)
+                    user.save()
+                    print(user.past_searches)
         return render(request, "stockscreener/index.html", {"stockForm": stockForm, "graph":graph})
 
 def login_view(request):

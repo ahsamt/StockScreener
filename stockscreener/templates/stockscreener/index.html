@@ -4,6 +4,19 @@
   {% csrf_token %} {{ stockForm }}
   <button type="submit">Get Results</button>
 </form>
+
+{% if user.is_authenticated %} {% if pastSearches %} Your recent searches
+include:
+<ul>
+  {% for search in user.past_searches %}
+  <li>
+    <a href="/">{{ search }}</a>
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}{% endif %}
+<br />
+
 <br />
 
 {{ graph | safe }} {% endblock %}
