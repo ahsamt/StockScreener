@@ -1,3 +1,4 @@
+from types import ClassMethodDescriptorType
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
@@ -33,22 +34,25 @@ def index(request):
         if 'stock' in request.POST:
             stockForm = StockForm(request.POST) 
             if stockForm.is_valid():
-                stock = stockForm.cleaned_data['stock']
-                ticker = [stock]
+                stock = stockForm.cleaned_data['stock'].upper()
+                ticker = [stock, "^GSPC"]
                 num_months = 6
                 end_date = date.today()
                 start_date = end_date + relativedelta(months = -num_months) 
                 
                 stocks = yf.download(ticker, start = start_date, end = end_date)
                 stocks.to_csv("stocks.csv")
-                stocks = pd.read_csv("stocks.csv", header = [0], index_col = [0], parse_dates = [0])
-                stocks = stocks.reset_index()
-                dates = stocks.loc[:, "Date"].copy()
+                stocks = pd.read_csv("stocks.csv", header = [0, 1], index_col = [0], parse_dates = [0])
+                stocks.columns = stocks.columns.to_flat_index()
+                stocks.columns = pd.MultiIndex.from_tuples(stocks.columns)
+                stocks.swaplevel(axis = 1).sort_index(axis = 1)
                 close = stocks.loc[:, "Close"].copy()
-
+                norm = close.div(close.iloc[0]).mul(100)
+                norm = norm.reset_index()
                 
                 fig = go.Figure()
-                fig.add_trace(go.Scatter(name="Graph", x=dates, y=close))
+                fig.add_trace(go.Scatter(name=stock, x=norm["Date"], y=norm[stock]))
+                fig.add_trace(go.Scatter(name="S&P 500", x=norm["Date"], y=norm["^GSPC"]))
                 fig.update_layout(title = f"{stock} trading over the past 6 months")
 
                 graph = fig.to_html(full_html=False, default_height=500, default_width=700)
