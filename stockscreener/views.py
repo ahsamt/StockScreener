@@ -53,7 +53,7 @@ def index(request):
                 fig = go.Figure()
                 fig.add_trace(go.Scatter(name=stock, x=norm["Date"], y=norm[stock]))
                 fig.add_trace(go.Scatter(name="S&P 500", x=norm["Date"], y=norm["^GSPC"]))
-                fig.update_layout(title = f"{stock} trading over the past 6 months")
+                fig.update_layout(title = f"{stock} trading over the past 6 months", template="seaborn")
 
                 graph = fig.to_html(full_html=False, default_height=500, default_width=700)
 
