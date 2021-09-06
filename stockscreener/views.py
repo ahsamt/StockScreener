@@ -8,7 +8,10 @@ from django.conf import settings
 from django import forms
 import os
 
-import plotly.express as px
+from datetime import date, timedelta
+from dateutil.relativedelta import relativedelta
+
+import plotly.graph_objects as go
 
 import pandas as pd
 import yfinance as yf
@@ -18,10 +21,10 @@ class StockForm(forms.Form):
 
 
 def index(request):
+    
     if request.method == "GET":
         stockForm = StockForm()
-        ticker = ["AAPL", "BA", "KO", "IBM", "DIS", "MSFT"]
-        
+             
         return render(request, "stockscreener/index.html", {"stockForm": stockForm})
    
     if request.method == "POST":
@@ -29,20 +32,26 @@ def index(request):
             stockForm = StockForm(request.POST) 
             if stockForm.is_valid():
                 stock = stockForm.cleaned_data['stock']
-                print(stock)
-                ticker=[stock]
+                ticker = [stock]
+                num_months = 6
+                end_date = date.today()
+                start_date = end_date + relativedelta(months = -num_months) 
                 
-                stocks = yf.download(ticker, start = "2010-01-01", end = "2021-08-31")
+                stocks = yf.download(ticker, start = start_date, end = end_date)
                 stocks.to_csv("stocks.csv")
                 stocks = pd.read_csv("stocks.csv", header = [0], index_col = [0], parse_dates = [0])
-                a = stocks.reset_index()
+                stocks = stocks.reset_index()
+                dates = stocks.loc[:, "Date"].copy()
                 close = stocks.loc[:, "Close"].copy()
 
                 
+                fig = go.Figure()
+                fig.add_trace(go.Scatter(name="Graph", x=dates, y=close ))
 
-                fig = px.bar(a, x="Date", y="Close", barmode="group")
+                graph = fig.to_html(full_html=False, default_height=500, default_width=700)
+
                 
-        return render(request, "stockscreener/index.html", {"stockForm": stockForm, "fig":fig})
+        return render(request, "stockscreener/index.html", {"stockForm": stockForm, "graph":graph})
 
 def login_view(request):
     if request.method == "POST":
