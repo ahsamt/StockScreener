@@ -17,6 +17,8 @@ import plotly.graph_objects as go
 import pandas as pd
 import yfinance as yf
 
+from .utils import moving_average
+
 class StockForm(forms.Form):
     stock = forms.CharField(label = "Stock name", max_length=5)
 
@@ -37,25 +39,23 @@ def index(request):
             if stockForm.is_valid():
                 stock = stockForm.cleaned_data['stock'].upper()
                 ticker = [stock, "^GSPC"]
-                num_months = 6
-                end_date = date.today()
-                start_date = end_date + relativedelta(months = -num_months) 
+                # num_months = 6
+                # end_date = date.today()
                 
-                stocks = yf.download(ticker, start = start_date, end = end_date)
-                stocks.to_csv("stocks.csv")
+               
+                # start_date = end_date + relativedelta(months = -num_months) 
+                # print(start_date)
+                # print(end_date)
+                # stocks = yf.download(ticker, start = start_date, end = end_date)
+                # stocks.to_csv("stocks.csv")
                 stocks = pd.read_csv("stocks.csv", header = [0, 1], index_col = [0], parse_dates = [0])
                 stocks.columns = stocks.columns.to_flat_index()
                 stocks.columns = pd.MultiIndex.from_tuples(stocks.columns)
                 stocks.swaplevel(axis = 1).sort_index(axis = 1)
                 close = stocks.loc[:, "Close"].copy()
 
-                window_size = 20
-                windows = close[stock].copy().rolling(window_size)
-                moving_avgs = windows.mean()
-
-                close["moving_avg_20"] = moving_avgs
-
-
+                close["moving_avg_20"] = moving_average(close[stock].copy(), 20)
+                close["moving_avg_50"] = moving_average(close[stock].copy(), 50)
 
                 norm = close.div(close.iloc[0]).mul(100)
                 norm = norm.reset_index()
@@ -64,6 +64,7 @@ def index(request):
                 fig = go.Figure()
                 fig.add_trace(go.Scatter(name=stock, x=close["Date"], y=close[stock])) 
                 fig.add_trace(go.Scatter(name="20 day moving avg", x=close["Date"], y=close["moving_avg_20"])) 
+                fig.add_trace(go.Scatter(name="50 day moving avg", x=close["Date"], y=close["moving_avg_50"])) 
                 fig.update_layout(title = f"{stock} prices over the past 6 months", template="seaborn") 
                 graph1 = fig.to_html(full_html=False, default_height=500, default_width=700)
 
