@@ -48,21 +48,38 @@ def index(request):
                 stocks.columns = pd.MultiIndex.from_tuples(stocks.columns)
                 stocks.swaplevel(axis = 1).sort_index(axis = 1)
                 close = stocks.loc[:, "Close"].copy()
+
+                window_size = 20
+                windows = close[stock].copy().rolling(window_size)
+                moving_avgs = windows.mean()
+
+                close["moving_avg_20"] = moving_avgs
+
+
+
                 norm = close.div(close.iloc[0]).mul(100)
                 norm = norm.reset_index()
-                
+                close = close.reset_index()
+
+                fig = go.Figure()
+                fig.add_trace(go.Scatter(name=stock, x=close["Date"], y=close[stock])) 
+                fig.add_trace(go.Scatter(name="20 day moving avg", x=close["Date"], y=close["moving_avg_20"])) 
+                fig.update_layout(title = f"{stock} prices over the past 6 months", template="seaborn") 
+                graph1 = fig.to_html(full_html=False, default_height=500, default_width=700)
+
+      
                 fig = go.Figure()
                 fig.add_trace(go.Scatter(name=stock, x=norm["Date"], y=norm[stock]))
                 fig.add_trace(go.Scatter(name="S&P 500", x=norm["Date"], y=norm["^GSPC"]))
-                fig.update_layout(title = f"{stock} trading over the past 6 months", template="seaborn")
+                fig.update_layout(title = f"{stock} trading vs S&P 500 trading over the past 6 months", template="seaborn")
 
-                graph = fig.to_html(full_html=False, default_height=500, default_width=700)
+                graph2 = fig.to_html(full_html=False, default_height=500, default_width=700)
 
                 if user.is_authenticated:
                     search = Search(searcher=user, stock=stock)
                     search.save()
                     
-        return render(request, "stockscreener/index.html", {"stockForm": stockForm, "graph":graph})
+        return render(request, "stockscreener/index.html", {"stockForm": stockForm, "graph1":graph1, "graph2":graph2})
 
 def login_view(request):
     if request.method == "POST":
