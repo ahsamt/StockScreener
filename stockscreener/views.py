@@ -77,8 +77,29 @@ def index(request):
                                      {"count": 14, "label": "2W", "step": "day",
                                       "stepmode": "backward"},
                                      {"count": 1, "label": "1M", "step": "month",
+                                      "stepmode": "backward"},
+                                     {"count": 6, "label": "6M", "step": "month",
                                       "stepmode": "backward"}
                                  ]}}) 
+                
+                fig.add_trace(go.Scatter(
+                x=[pd.to_datetime("2021-07-09")],
+                y=["145.11350021362300"],
+                mode="markers+text",
+                name="Point to Buy",
+                text=["Point to buy"],
+                textposition="bottom center"
+                ))
+                # annotation_template = go.layout.Template()
+                # annotation_template.layout.annotationdefaults = dict(font=dict(color="crimson"))
+
+                # fig.update_layout(
+                #     template=annotation_template,
+                #          annotations=[
+                #         dict(text="Look Here", x=1, y=1),
+                #         dict(text="Look There", x=2, y=2)
+                #         ]
+                #     )
                 graph1 = fig.to_html(full_html=False, default_height=500, default_width=700)
 
       
@@ -94,6 +115,8 @@ def index(request):
                                      {"count": 14, "label": "2W", "step": "day",
                                       "stepmode": "backward"},
                                      {"count": 1, "label": "1M", "step": "month",
+                                      "stepmode": "backward"},
+                                     {"count": 6, "label": "6M", "step": "month",
                                       "stepmode": "backward"}
                                  ]}}) 
 
