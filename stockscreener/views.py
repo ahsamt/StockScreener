@@ -4,9 +4,10 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.db import IntegrityError
-from .models import User, Search
+from .models import User, SavedSearch
 from django.conf import settings
 from django import forms
+from django.contrib.auth.decorators import login_required
 import os
 
 from datetime import date, datetime, timedelta
@@ -17,7 +18,7 @@ import plotly.graph_objects as go
 import pandas as pd
 import yfinance as yf
 
-from .utils import moving_average
+from .utils import make_graph_1, make_graph_2, prep_graph_data
 
 class StockForm(forms.Form):
     stock = forms.CharField(label = "Stock name", max_length=5)
@@ -38,93 +39,17 @@ def index(request):
             stockForm = StockForm(request.POST) 
             if stockForm.is_valid():
                 stock = stockForm.cleaned_data['stock'].upper()
-                ticker = [stock, "^GSPC"]
-                num_months = 6
-                end_date = date.today()
                 
-               
-                start_date = end_date + relativedelta(months = -num_months)
-                start_date_internal = start_date + relativedelta(months= -3) 
-                start_date_datetime = datetime.combine(start_date, datetime.min.time()) 
-                # stocks = yf.download(ticker, start = start_date_internal, end = end_date)
-                # stocks.to_csv("stocks.csv")
-                stocks = pd.read_csv("stocks.csv", header = [0, 1], index_col = [0], parse_dates = [0])
-                stocks.columns = stocks.columns.to_flat_index()
-                stocks.columns = pd.MultiIndex.from_tuples(stocks.columns)
-                stocks.swaplevel(axis = 1).sort_index(axis = 1)
-                close = stocks.loc[:, "Close"].copy()
+                data1, data2 = prep_graph_data(stock) 
 
-                close["moving_avg_20"] = moving_average(close[stock].copy(), 20)
-                close["moving_avg_50"] = moving_average(close[stock].copy(), 50)
+                graph1 = make_graph_1(data1, stock)
+                graph2 = make_graph_2(data2, stock)
 
-                mask = (close.index >= start_date_datetime)
-                close_6months = close.loc[mask]
-                norm = close_6months.div(close.iloc[0]).mul(100)
-                norm = norm.reset_index()
-                close_6months = close_6months.reset_index()
-                close_6months.to_csv("close.csv")
-
-                fig = go.Figure()
-                fig.add_trace(go.Scatter(name=stock, x=close_6months["Date"], y=close_6months[stock])) 
-                fig.add_trace(go.Scatter(name="20 day moving avg", x=close_6months["Date"], y=close_6months["moving_avg_20"])) 
-                fig.add_trace(go.Scatter(name="50 day moving avg", x=close_6months["Date"], y=close_6months["moving_avg_50"])) 
-                fig.update_layout(title = f"{stock} prices over the past 6 months", template="seaborn", legend = {"orientation": "h","xanchor":"left"},
-                         xaxis = {
-                             "rangeselector": {
-                                 "buttons": [
-                                     {"count": 7, "label": "1W", "step": "day",
-                                      "stepmode": "backward"},
-                                     {"count": 14, "label": "2W", "step": "day",
-                                      "stepmode": "backward"},
-                                     {"count": 1, "label": "1M", "step": "month",
-                                      "stepmode": "backward"},
-                                     {"count": 6, "label": "6M", "step": "month",
-                                      "stepmode": "backward"}
-                                 ]}}) 
                 
-                fig.add_trace(go.Scatter(
-                x=[pd.to_datetime("2021-07-09")],
-                y=["145.11350021362300"],
-                mode="markers+text",
-                name="Point to Buy",
-                text=["Point to buy"],
-                textposition="bottom center"
-                ))
-                # annotation_template = go.layout.Template()
-                # annotation_template.layout.annotationdefaults = dict(font=dict(color="crimson"))
-
-                # fig.update_layout(
-                #     template=annotation_template,
-                #          annotations=[
-                #         dict(text="Look Here", x=1, y=1),
-                #         dict(text="Look There", x=2, y=2)
-                #         ]
-                #     )
-                graph1 = fig.to_html(full_html=False, default_height=500, default_width=700)
-
-      
-                fig = go.Figure()
-                fig.add_trace(go.Scatter(name=stock, x=norm["Date"], y=norm[stock]))
-                fig.add_trace(go.Scatter(name="S&P 500", x=norm["Date"], y=norm["^GSPC"]))
-                fig.update_layout(title = f"{stock} trading vs S&P 500 trading over the past 6 months", template="seaborn", legend = {"orientation": "h","xanchor":"left"},
-                         xaxis = {
-                             "rangeselector": {
-                                 "buttons": [
-                                     {"count": 7, "label": "1W", "step": "day",
-                                      "stepmode": "backward"},
-                                     {"count": 14, "label": "2W", "step": "day",
-                                      "stepmode": "backward"},
-                                     {"count": 1, "label": "1M", "step": "month",
-                                      "stepmode": "backward"},
-                                     {"count": 6, "label": "6M", "step": "month",
-                                      "stepmode": "backward"}
-                                 ]}}) 
-
-                graph2 = fig.to_html(full_html=False, default_height=500, default_width=700)
-
                 if user.is_authenticated:
-                    search = Search(searcher=user, stock=stock)
-                    search.save()
+                    if not len(SavedSearch.objects.filter(searcher = request.user, stock = stock)):
+                        search = SavedSearch(searcher=user, stock=stock)
+                        search.save()
                     
         return render(request, "stockscreener/index.html", {"stockForm": stockForm, "graph1":graph1, "graph2":graph2})
 
@@ -173,3 +98,12 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "stockscreener/register.html")
+    
+@login_required
+def watchlist(request):
+    if request.method == "GET":
+        if request.user.is_authenticated:
+            pastSearches=request.user.searches.all()  
+            pastSearches=sorted(pastSearches, key = lambda p: (p.date), reverse=True)
+        return render(request, "stockscreener/watchlist.html", {'pastSearches':pastSearches})
+       

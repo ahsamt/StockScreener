@@ -5,16 +5,6 @@
   <button type="submit">Get Results</button>
 </form>
 
-{% if user.is_authenticated %} {% if pastSearches %} Your recent searches
-include:
-<ul>
-  {% for search in pastSearches %}
-  <li>
-    <a href="/">{{ search.stock }}</a>
-  </li>
-  {% endfor %}
-</ul>
-{% endif %}{% endif %}
 <br />
 
 <br />

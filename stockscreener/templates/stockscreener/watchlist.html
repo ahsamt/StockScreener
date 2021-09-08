@@ -1,0 +1,20 @@
+{% extends "stockscreener/layout.html" %} {% load static %}{% block body %}
+<h2>{{ user }}'s watchlist</h2>
+{% if user.is_authenticated %} {% if pastSearches %} Your recent searches
+include:
+<ul>
+  {% for search in pastSearches %}
+  <div class="saved-search">{{ search.stock }}</div>
+  {{ graph1 | safe }}
+  <br />
+  {{ graph2 | safe }}
+  <br />
+  {% endfor %}
+</ul>
+{% endif %} {% else %}
+<p>You do not have any stocks in your watchlist</p>
+{% endif %}
+<br />
+
+<br />
+{% endblock %}
