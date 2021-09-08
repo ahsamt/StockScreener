@@ -18,8 +18,8 @@ def prep_graph_data(stock):
     start_date = end_date + relativedelta(months = -num_months)
     start_date_internal = start_date + relativedelta(months= -3) 
     start_date_datetime = datetime.combine(start_date, datetime.min.time()) 
-    # stocks = yf.download(ticker, start = start_date_internal, end = end_date)
-    # stocks.to_csv("stocks.csv")
+    stocks = yf.download(ticker, start = start_date_internal, end = end_date)
+    stocks.to_csv("stocks.csv")
     stocks = pd.read_csv("stocks.csv", header = [0, 1], index_col = [0], parse_dates = [0])
     stocks.columns = stocks.columns.to_flat_index()
     stocks.columns = pd.MultiIndex.from_tuples(stocks.columns)
@@ -31,7 +31,7 @@ def prep_graph_data(stock):
 
     mask = (close.index >= start_date_datetime)
     close_6months = close.loc[mask]
-    norm = close_6months.div(close.iloc[0]).mul(100)
+    norm = close_6months.div(close_6months.iloc[0]).mul(100)
     norm = norm.reset_index()
     close_6months = close_6months.reset_index()
     # close_6months["buy_point"] = (close_6months["moving_avg_20"].round() == close_6months["moving_avg_50"].round())
@@ -60,14 +60,14 @@ def make_graph_1(data, stock):
                         "stepmode": "backward"}
                 ]}}) 
                 
-    fig.add_trace(go.Scatter(
-    x=[pd.to_datetime("2021-07-09")],
-    y=["145.11350021362300"],
-    mode="markers+text",
-    name="Point to Buy",
-    text=["Point to buy"],
-    textposition="bottom center"
-    ))
+    # fig.add_trace(go.Scatter(
+    # x=[pd.to_datetime("2021-07-09")],
+    # y=["145.11350021362300"],
+    # mode="markers+text",
+    # name="Point to Buy",
+    # text=["Point to buy"],
+    # textposition="bottom center"
+    # ))
                 
     graph = fig.to_html(full_html=False, default_height=500, default_width=700)
     return graph

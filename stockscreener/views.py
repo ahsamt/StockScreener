@@ -103,7 +103,19 @@ def register(request):
 def watchlist(request):
     if request.method == "GET":
         if request.user.is_authenticated:
+            watchlist = []
+           
             pastSearches=request.user.searches.all()  
             pastSearches=sorted(pastSearches, key = lambda p: (p.date), reverse=True)
-        return render(request, "stockscreener/watchlist.html", {'pastSearches':pastSearches})
+            for search in pastSearches:   
+                stock = search.stock  
+                watchlist_temp = []          
+                data1, data2 = prep_graph_data(stock)
+                watchlist_temp.append (stock),
+                graph1 = make_graph_1(data1, stock)              
+                watchlist_temp.append (graph1)
+                graph2 = make_graph_2(data2, stock)
+                watchlist_temp.append (graph2)
+                watchlist.append(watchlist_temp)    
+        return render(request, "stockscreener/watchlist.html", {'watchlist':watchlist})
        
