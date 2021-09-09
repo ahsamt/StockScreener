@@ -29,13 +29,8 @@ class NotesForm(forms.Form):
 def index(request):
     user = request.user
     if request.method == "GET":
-        stockForm = StockForm()
-        if user.is_authenticated:
-            pastSearches=user.searches.all()  
-            pastSearches=sorted(pastSearches, key = lambda p: (p.date), reverse=True)[:5] 
-            return render(request, "stockscreener/index.html", {"stockForm": stockForm, 'pastSearches':pastSearches})
-        else:
-            return render (request, "stockscreener/index.html", {"stockForm": stockForm})
+        stockForm = StockForm()     
+        return render (request, "stockscreener/index.html", {"stockForm": stockForm})
     if request.method == "POST":
         if 'stock' in request.POST:
             stockForm = StockForm(request.POST) 
@@ -52,20 +47,22 @@ def index(request):
                 else:
                     change = (f"-${price_dif}  (-{perc_dif}%)")
 
+                
                 graph1 = make_graph_1(data1, stock)
                 graph2 = make_graph_2(data2, stock)
 
                 
                 if user.is_authenticated:
                     if not len(SavedSearch.objects.filter(searcher = request.user, stock = stock)):
-                        search = SavedSearch(searcher=user, stock=stock)
-                        search.save()
+                        watchlisted = False
+                    else:
+                        watchlisted = True
             context = {
                 "stockForm": stockForm, 
                 "stock":stock,
                 "closing_price":closing_price,
                 "change": change,
-                "watchlisted": True, 
+                "watchlisted": watchlisted, 
                 "graph1":graph1, 
                 "graph2":graph2
                 }
@@ -121,12 +118,12 @@ def register(request):
 def watchlist(request):
     if request.method == "GET":
         if request.user.is_authenticated:
-            watchlist = []
+            watched_stocks = []
            
-            pastSearches=request.user.searches.all()  
-            pastSearches=sorted(pastSearches, key = lambda p: (p.date), reverse=True)
-            for search in pastSearches:   
-                stock = search.stock  
+            watchlist=request.user.watchlist.all()  
+            watchlist=sorted(watchlist, key = lambda p: (p.date), reverse=True)
+            for item in watchlist:   
+                stock = item.stock  
                 watchlist_temp = []          
                 data1, data2 = prep_graph_data(stock)
                 watchlist_temp.append (stock),
@@ -134,6 +131,6 @@ def watchlist(request):
                 watchlist_temp.append (graph1)
                 graph2 = make_graph_2(data2, stock)
                 watchlist_temp.append (graph2)
-                watchlist.append(watchlist_temp)    
-        return render(request, "stockscreener/watchlist.html", {'watchlist':watchlist})
+                watched_stocks.append(watchlist_temp)    
+        return render(request, "stockscreener/watchlist.html", {'watched_stocks':watched_stocks})
        

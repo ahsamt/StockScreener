@@ -1,10 +1,11 @@
 {% extends "stockscreener/layout.html" %} {% load static %}{% block body %}
 <h2>{{ user }}'s watchlist</h2>
 <!-- prettier-ignore -->
-{% if user.is_authenticated %} {% if watchlist %} 
+{% if user.is_authenticated %} {% if watched_stocks %} 
+
 Your watched stocks: 
-{% for item in watchlist %}
-<div class="saved-search">
+{% for item in watched_stocks %}
+<div class="watched_item">
   <h3>{{ item.0 }}</h3>
   {{ item.1| safe }}
   <br />
@@ -12,10 +13,9 @@ Your watched stocks:
   <br />
   {% endfor %}
 </div>
-
-{% endif %} {% else %}
+{% else %}
 <p>You do not have any stocks in your watchlist</p>
-{% endif %}
+{% endif %} {% endif %}
 <br />
 
 <br />
