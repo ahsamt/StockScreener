@@ -23,7 +23,10 @@
           <span class="price_change">{{ change }}</span>
         </h6>
         {% if watchlisted %}
-        <a href="#" class="card-link"> Remove {{ stock }} from watchlist</a>
+        <div class="card-link">
+          <a href="#" class="watchlist"> Remove {{ stock }} from watchlist</a>
+        </div>
+
         <br />
         {% if notes %}
         <h6>Notes</h6>
@@ -32,7 +35,8 @@
         {% else %}
         <a href="/" class="notes_link">Add notes</a>
         {% endif %} {% else %}
-        <a href="#">Remove {{ stock }} from watchlist</a>{% endif %}
+        <a href="#" class="watchlist"> Remove {{ stock }} from watchlist</a>
+        {% endif %}
       </div>
     </div>
   </div>
