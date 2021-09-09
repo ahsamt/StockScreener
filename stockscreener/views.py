@@ -23,6 +23,8 @@ from .utils import make_graph_1, make_graph_2, prep_graph_data
 class StockForm(forms.Form):
     stock = forms.CharField(label = "Stock name", max_length=5)
 
+class NotesForm(forms.Form):
+    notes = forms.CharField(label="Notes", required=True, widget=forms.Textarea)
 
 def index(request):
     user = request.user
@@ -41,6 +43,14 @@ def index(request):
                 stock = stockForm.cleaned_data['stock'].upper()
                 
                 data1, data2 = prep_graph_data(stock) 
+                closing_price = round(data1[stock].iloc[-1],2)
+                previous_price = round(data1[stock].iloc[-2],2)
+                price_dif = round(previous_price - closing_price, 2)
+                perc_dif = round(price_dif/previous_price*100, 2) 
+                if price_dif > 0:
+                    change = (f"+${price_dif}  (+{perc_dif}%)")
+                else:
+                    change = (f"-${price_dif}  (-{perc_dif}%)")
 
                 graph1 = make_graph_1(data1, stock)
                 graph2 = make_graph_2(data2, stock)
@@ -50,9 +60,17 @@ def index(request):
                     if not len(SavedSearch.objects.filter(searcher = request.user, stock = stock)):
                         search = SavedSearch(searcher=user, stock=stock)
                         search.save()
-                    
-        return render(request, "stockscreener/index.html", {"stockForm": stockForm, "graph1":graph1, "graph2":graph2})
-
+            context = {
+                "stockForm": stockForm, 
+                "stock":stock,
+                "closing_price":closing_price,
+                "change": change,
+                "watchlisted": True, 
+                "graph1":graph1, 
+                "graph2":graph2
+                }
+                   
+        return render(request, "stockscreener/index.html", context)
 def login_view(request):
     if request.method == "POST":
         # Attempt to sign user in

@@ -21,3 +21,10 @@ button:hover {
   background-color: #255484;
   color: white;
 }
+
+.closing_price {
+  color: crimson;
+}
+.price_change {
+  color: orange;
+}

@@ -8,7 +8,34 @@
 <br />
 
 <br />
-
-{{ graph1 | safe }}
+{% if stock %}
+<div class="row">
+  <div class="col">{{ graph1 | safe }}</div>
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{ stock }}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">
+          Last closing price:
+          <span class="closing_price">${{ closing_price }}</span>
+        </h6>
+        <h6 class="card-subtitle mb-2 text-muted">
+          <span class="price_change">{{ change }}</span>
+        </h6>
+        {% if watchlisted %}
+        <a href="#" class="card-link"> Remove {{ stock }} from watchlist</a>
+        <br />
+        {% if notes %}
+        <h6>Notes</h6>
+        <p>{{ notes }}</p>
+        <a href="/" class="notes_link">Edit notes</a>
+        {% else %}
+        <a href="/" class="notes_link">Add notes</a>
+        {% endif %} {% else %}
+        <a href="#">Remove {{ stock }} from watchlist</a>{% endif %}
+      </div>
+    </div>
+  </div>
+</div>
 <br />
-{{ graph2 | safe }} {% endblock %}
+{{ graph2 | safe }} {% endif %}{% endblock %}
