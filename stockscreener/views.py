@@ -8,6 +8,9 @@ from .models import User, SavedSearch
 from django.conf import settings
 from django import forms
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+import json
 import os
 
 from datetime import date, datetime, timedelta
@@ -62,7 +65,7 @@ def index(request):
                 "stock":stock,
                 "closing_price":closing_price,
                 "change": change,
-                
+                "watchlisted":watchlisted, 
                 "graph1":graph1, 
                 "graph2":graph2
                 }
@@ -133,4 +136,64 @@ def watchlist(request):
                 watchlist_temp.append (graph2)
                 watched_stocks.append(watchlist_temp)    
         return render(request, "stockscreener/watchlist.html", {'watched_stocks':watched_stocks})
+
+@csrf_exempt
+@login_required
+def saved_searches(request):
+
+    # Creating a new saved search must be via POST
+    if request.method != "POST":
+        return JsonResponse({"error": "POST request required."}, status=400)
+
+    # Check received data emails
+    data = json.loads(request.body)
+    
+    stock = data.get("stock")
+    if stock == [""]:
+        return JsonResponse({
+            "error": "Stock name is required."
+        }, status=400)
+    
+    
+    # Create a saved search for the logged in user
+    
+    savedSearch = SavedSearch(
+            user = request.user,
+            stock = stock,
+            
+        )
+    savedSearch.save()
        
+
+    return JsonResponse({"message": "Search saved successfully"}, status=201)
+
+@csrf_exempt
+@login_required
+def saved_search(request, saved_search_id):
+    pass
+    # # Query for requested email
+    # try:
+    #     email = Email.objects.get(user=request.user, pk=email_id)
+    # except Email.DoesNotExist:
+    #     return JsonResponse({"error": "Email not found."}, status=404)
+
+    # # Return email contents
+    # if request.method == "GET":
+    #     return JsonResponse(email.serialize())
+
+    # # Update whether email is read or should be archived
+    # elif request.method == "PUT":
+    #     data = json.loads(request.body)
+    #     if data.get("read") is not None:
+    #         email.read = data["read"]
+    #     if data.get("archived") is not None:
+    #         email.archived = data["archived"]
+    #     email.save()
+    #     return HttpResponse(status=204)
+
+    # # Email must be via GET or PUT
+    # else:
+    #     return JsonResponse({
+    #         "error": "GET or PUT request required."
+    #     }, status=400)
+

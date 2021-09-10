@@ -11,6 +11,16 @@ class SavedSearch(models.Model):
     date = models.DateTimeField(default = django.utils.timezone.now)
     notes = models.TextField(max_length=500, blank = True)
     user = models.ForeignKey("User", on_delete=models.CASCADE, related_name="watchlist")
+    
+    def serialize(self):
+        return {
+            "id":self.id,
+            "stock":self.stock,
+            "user":self.user.username,
+            "date": self.date,
+            "notes":self.notes
+        }
+   
     def __str__(self):
         return f"{self.stock} on {self.date}, watched by {self.user}" 
     

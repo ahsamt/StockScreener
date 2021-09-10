@@ -14,7 +14,7 @@
   <div class="col">
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">{{ stock }}</h5>
+        <h5 class="card-title" id="stock_name">{{ stock }}</h5>
         <h6 class="card-subtitle mb-2 text-muted">
           Last closing price:
           <span class="closing_price">${{ closing_price }}</span>
@@ -22,12 +22,13 @@
         <h6 class="card-subtitle mb-2 text-muted">
           <span class="price_change">{{ change }}</span>
         </h6>
-        {% if watchlisted %}
+        {% if user.is_authenticated %} {% if watchlisted %}
         <div class="card-link">
           <a href="#" class="watchlist"> Remove {{ stock }} from watchlist</a>
         </div>
 
         <br />
+
         {% if notes %}
         <h6>Notes</h6>
         <p>{{ notes }}</p>
@@ -36,7 +37,10 @@
         <a href="/" class="notes_link">Add notes</a>
         {% endif %} {% else %}
         <a href="#" class="watchlist"> Add {{ stock }} to watchlist</a>
+        {% endif %} {% else %}
+        <p>Please log in or register to add this stock to your watchlist</p>
         {% endif %}
+        <p id="message"></p>
       </div>
     </div>
   </div>
