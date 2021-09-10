@@ -53,7 +53,7 @@ def index(request):
 
                 
                 if user.is_authenticated:
-                    if not len(SavedSearch.objects.filter(searcher = request.user, stock = stock)):
+                    if not len(SavedSearch.objects.filter(user = request.user, stock = stock)):
                         watchlisted = False
                     else:
                         watchlisted = True
@@ -62,7 +62,7 @@ def index(request):
                 "stock":stock,
                 "closing_price":closing_price,
                 "change": change,
-                "watchlisted": watchlisted, 
+                
                 "graph1":graph1, 
                 "graph2":graph2
                 }
@@ -120,7 +120,7 @@ def watchlist(request):
         if request.user.is_authenticated:
             watched_stocks = []
            
-            watchlist=request.user.watchlist.all()  
+            watchlist=SavedSearch.objects.filter(user=request.user)  
             watchlist=sorted(watchlist, key = lambda p: (p.date), reverse=True)
             for item in watchlist:   
                 stock = item.stock  
