@@ -10,5 +10,5 @@ urlpatterns = [
 
      # API Routes
      path("saved_searches", views.saved_searches, name = "saved_searches"),
-     path("saved_searches/<int:saved_search_id>", views.saved_search, name="saved_search")
+     path("saved_searches/<int:search_id>", views.saved_search, name="saved_search")
 ]

@@ -27,8 +27,8 @@
           <a
             href="#"
             class="watchlist"
-            id="Remove{{ stock }}"
-            data-searchID="{{ stock }}"
+            data-stockName="{{ stock }}"
+            data-stockID="{{ stockID }}"
             >Remove {{ stock }} from watchlist</a
           >
         </div>
@@ -47,6 +47,7 @@
           class="watchlist"
           id="Add{{ stock }}"
           data-stockName="{{ stock }}"
+          data-stockID="{{ stockID }}"
         >
           Add {{ stock }} to watchlist</a
         >

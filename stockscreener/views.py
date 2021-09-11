@@ -59,13 +59,14 @@ def index(request):
                 if user.is_authenticated:
                     if len(SavedSearch.objects.filter(user = request.user, stock = stock)):                      
                         watchlisted = True
-                        # stockID =  SavedSearch.objects.filter(user = request.user, stock = stock)[0].id
+                        stockID =  SavedSearch.objects.filter(user = request.user, stock = stock)[0].id
                 # else:
                 #     watchlisted = False
                 #     stockID = None
             context = {
                 "stockForm": stockForm, 
                 "stock":stock,
+                "stockID":stockID,
                 "closing_price":closing_price,
                 "change": change,
                 "watchlisted":watchlisted, 
@@ -167,37 +168,40 @@ def saved_searches(request):
             
         )
     savedSearch.save()
+    search_id = savedSearch.id
        
 
-    return JsonResponse({"message": "Search saved successfully"}, status=201)
+    return JsonResponse({"message": "Search saved successfully", "id":search_id}, status=201)
 
 @csrf_exempt
 @login_required
-def saved_search(request, saved_search_id):
-    pass
-    # # Query for requested email
-    # try:
-    #     email = Email.objects.get(user=request.user, pk=email_id)
-    # except Email.DoesNotExist:
-    #     return JsonResponse({"error": "Email not found."}, status=404)
+def saved_search(request, search_id):
+   
+    # Query for requested search
+    try:
+        search = SavedSearch.objects.get(user=request.user, pk=search_id)
+    except SavedSearch.DoesNotExist:
+        return JsonResponse({"error": "No such search has been saved for this user."}, status=404)
 
-    # # Return email contents
-    # if request.method == "GET":
-    #     return JsonResponse(email.serialize())
+    # Return saved search contents
+    if request.method == "GET":
+        return JsonResponse(search.serialize())
 
-    # # Update whether email is read or should be archived
-    # elif request.method == "PUT":
-    #     data = json.loads(request.body)
-    #     if data.get("read") is not None:
-    #         email.read = data["read"]
-    #     if data.get("archived") is not None:
-    #         email.archived = data["archived"]
-    #     email.save()
-    #     return HttpResponse(status=204)
+    # Update notes for the saved search
+    elif request.method == "PUT":
+        data = json.loads(request.body)
+        if data.get("notes") is not None:
+            search.notes = data["notes"]
+        search.save()
+        return HttpResponse(status=204)
 
-    # # Email must be via GET or PUT
-    # else:
-    #     return JsonResponse({
-    #         "error": "GET or PUT request required."
-    #     }, status=400)
+    elif request.method == "DELETE":
+        search.delete()
+        return HttpResponse(status=204)
+
+    # Search must be via GET, PU or DELETE
+    else:
+        return JsonResponse({
+            "error": "GET, PUT or DELETE request required."
+         }, status=400)
 
