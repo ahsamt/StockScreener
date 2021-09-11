@@ -54,12 +54,15 @@ def index(request):
                 graph1 = make_graph_1(data1, stock)
                 graph2 = make_graph_2(data2, stock)
 
-                
+                watchlisted = False
+                stockID = None
                 if user.is_authenticated:
-                    if not len(SavedSearch.objects.filter(user = request.user, stock = stock)):
-                        watchlisted = False
-                    else:
+                    if len(SavedSearch.objects.filter(user = request.user, stock = stock)):                      
                         watchlisted = True
+                        # stockID =  SavedSearch.objects.filter(user = request.user, stock = stock)[0].id
+                # else:
+                #     watchlisted = False
+                #     stockID = None
             context = {
                 "stockForm": stockForm, 
                 "stock":stock,
@@ -126,7 +129,8 @@ def watchlist(request):
             watchlist=SavedSearch.objects.filter(user=request.user)  
             watchlist=sorted(watchlist, key = lambda p: (p.date), reverse=True)
             for item in watchlist:   
-                stock = item.stock  
+                stock = item.stock 
+                stockID = item.id 
                 watchlist_temp = []          
                 data1, data2 = prep_graph_data(stock)
                 watchlist_temp.append (stock),

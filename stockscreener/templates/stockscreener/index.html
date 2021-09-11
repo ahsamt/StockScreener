@@ -24,7 +24,13 @@
         </h6>
         {% if user.is_authenticated %} {% if watchlisted %}
         <div class="card-link">
-          <a href="#" class="watchlist"> Remove {{ stock }} from watchlist</a>
+          <a
+            href="#"
+            class="watchlist"
+            id="Remove{{ stock }}"
+            data-searchID="{{ stock }}"
+            >Remove {{ stock }} from watchlist</a
+          >
         </div>
 
         <br />
@@ -36,9 +42,21 @@
         {% else %}
         <a href="/" class="notes_link">Add notes</a>
         {% endif %} {% else %}
-        <a href="#" class="watchlist"> Add {{ stock }} to watchlist</a>
+        <a
+          href="#"
+          class="watchlist"
+          id="Add{{ stock }}"
+          data-stockName="{{ stock }}"
+        >
+          Add {{ stock }} to watchlist</a
+        >
         {% endif %} {% else %}
-        <p>Please log in or register to add this stock to your watchlist</p>
+        <p>
+          Please
+          <a href="{% url 'login' %}">log In</a>
+          or <a href="{% url 'register' %}">register</a> to add this stock to
+          your watchlist
+        </p>
         {% endif %}
         <p id="message"></p>
       </div>
