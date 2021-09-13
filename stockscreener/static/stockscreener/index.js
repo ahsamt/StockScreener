@@ -2,6 +2,9 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".watchlist").forEach((watch_button) => {
     watch_button.addEventListener("click", (event) => update_watchlist(event));
   });
+  document
+    .querySelectorAll(".edit_notes")
+    .forEach((editButton) => (editButton.style.display = "none"));
 });
 
 function update_watchlist(event) {
@@ -25,6 +28,8 @@ function update_watchlist(event) {
             "Search saved successfully";
           event.target.dataset.stock_id = result.id;
           event.target.innerHTML = `Remove ${stock} from watchlist`;
+          document.querySelector(`#editNotes${stockID}`).style.display =
+            "block";
           // } else {
           //   document.querySelector("#message").innerHTML = result.error;
         }
@@ -38,6 +43,7 @@ function update_watchlist(event) {
           "Search deleted successfully";
         event.target.dataset.stock_id = "None";
         event.target.innerHTML = `Add ${stock} to watchlist`;
+        document.querySelector(`#editNotes${stockID}`).style.display = "None";
         //   } else {
         //     document.querySelector("#message").innerHTML = result.error;
       }

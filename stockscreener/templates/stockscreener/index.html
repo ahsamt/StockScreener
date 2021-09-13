@@ -33,12 +33,6 @@
           >
         </div>
 
-        <br />
-        <form>
-          {{ notes }}
-          <button type="submit">Save notes</button>
-        </form>
-
         {% else %}
         <a
           href="#"
@@ -48,7 +42,29 @@
         >
           Add {{ stock }} to watchlist</a
         >
-        {% endif %} {% else %}
+        {% endif %}
+
+        <br />
+
+        <button id=>View notes</button>
+
+        <form
+          class="edit_notes"
+          id="editNotes{{ stockID }}"
+          data-stock_id="{{ stockID }}"
+        >
+          <div class="form-group">
+            <textarea
+              class="edit_content form-control"
+              id="editContent{{ stockID }}"
+              rows="7"
+            >
+              {{ notes }}
+            </textarea>
+            <button id="editNotesButton" type="submit">Save notes</button>
+          </div>
+        </form>
+        {% else %}
         <p>
           Please
           <a href="{% url 'login' %}">log In</a>

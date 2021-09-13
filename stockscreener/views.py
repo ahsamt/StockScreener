@@ -26,9 +26,6 @@ from .utils import make_graph_1, make_graph_2, prep_graph_data
 class StockForm(forms.Form):
     stock = forms.CharField(label = "Stock name", max_length=5)
 
-class NotesForm(forms.Form):
-    notes = forms.CharField(label="Notes", required=True, widget=forms.Textarea)
-
 def index(request):
     user = request.user
     if request.method == "GET":
@@ -56,13 +53,14 @@ def index(request):
 
                 watchlisted = False
                 stockID = None
-                notes = NotesForm()
+                notes = ""
 
                 if user.is_authenticated:
                     searchObj = SavedSearch.objects.filter(user = request.user, stock = stock)
                     if len(searchObj):                      
                         watchlisted = True
                         stockID =  searchObj[0].id
+                        notes = searchObj[0].notes
 
 
             context = {
