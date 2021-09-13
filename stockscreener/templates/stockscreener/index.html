@@ -9,19 +9,9 @@
 
 <br />
 {% if stock %}
-<div class="row">
-  <div class="col">{{ graph1 | safe }}</div>
-  <div class="col">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title" id="stock_name">{{ stock }}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">
-          Last closing price:
-          <span class="closing_price">${{ closing_price }}</span>
-        </h6>
-        <h6 class="card-subtitle mb-2 text-muted">
-          <span class="price_change">{{ change }}</span>
-        </h6>
+
+{% include "stockscreener/stock_details.html" with stock=stock change=change closing_price=closing_price %}
+
         {% if user.is_authenticated %} {% if watchlisted %}
         <div class="card-link">
           <a
@@ -44,6 +34,7 @@
         >
         {% endif %}
 
+        {% include "stockscreener/graphs.html" with graph1=graph1 graph2=graph2 %}
         <br />
 
         <button id=>View notes</button>
@@ -78,4 +69,4 @@
   </div>
 </div>
 <br />
-{{ graph2 | safe }} {% endif %}{% endblock %}
+ {% endif %}{% endblock %}
