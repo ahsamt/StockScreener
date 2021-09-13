@@ -56,10 +56,15 @@ def index(request):
 
                 watchlisted = False
                 stockID = None
+                notes = NotesForm()
+
                 if user.is_authenticated:
-                    if len(SavedSearch.objects.filter(user = request.user, stock = stock)):                      
+                    searchObj = SavedSearch.objects.filter(user = request.user, stock = stock)
+                    if searchObj:                      
                         watchlisted = True
-                        stockID =  SavedSearch.objects.filter(user = request.user, stock = stock)[0].id
+                        stockID =  searchObj.id
+
+
                 # else:
                 #     watchlisted = False
                 #     stockID = None
