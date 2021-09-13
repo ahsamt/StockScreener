@@ -46,10 +46,10 @@ def index(request):
                 price_dif = round(previous_price - closing_price, 2)
                 perc_dif = round(price_dif/previous_price*100, 2) 
                 if price_dif > 0:
-                    change = (f"+${price_dif}  (+{perc_dif}%)")
+                    sign = "+"
                 else:
-                    change = (f"-${price_dif}  (-{perc_dif}%)")
-
+                    sign = "-"
+                change = (f"{sign}${price_dif}  ({sign}{perc_dif}%)")
                 
                 graph1 = make_graph_1(data1, stock)
                 graph2 = make_graph_2(data2, stock)
@@ -60,18 +60,16 @@ def index(request):
 
                 if user.is_authenticated:
                     searchObj = SavedSearch.objects.filter(user = request.user, stock = stock)
-                    if searchObj:                      
+                    if len(searchObj):                      
                         watchlisted = True
-                        stockID =  searchObj.id
+                        stockID =  searchObj[0].id
 
 
-                # else:
-                #     watchlisted = False
-                #     stockID = None
             context = {
                 "stockForm": stockForm, 
                 "stock":stock,
                 "stockID":stockID,
+                "notes":notes,
                 "closing_price":closing_price,
                 "change": change,
                 "watchlisted":watchlisted, 
@@ -204,7 +202,7 @@ def saved_search(request, search_id):
         search.delete()
         return HttpResponse(status=204)
 
-    # Search must be via GET, PU or DELETE
+    # Search must be via GET, PUT or DELETE
     else:
         return JsonResponse({
             "error": "GET, PUT or DELETE request required."

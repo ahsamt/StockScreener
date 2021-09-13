@@ -25,8 +25,8 @@ function update_watchlist(event) {
             "Search saved successfully";
           event.target.dataset.stock_id = result.id;
           event.target.innerHTML = `Remove ${stock} from watchlist`;
-        } else {
-          document.querySelector("#message").innerHTML = result.error;
+          // } else {
+          //   document.querySelector("#message").innerHTML = result.error;
         }
       });
   } else {
@@ -37,9 +37,9 @@ function update_watchlist(event) {
         document.querySelector("#message").innerHTML =
           "Search deleted successfully";
         event.target.dataset.stock_id = "None";
-        event.target.innerHTML = `Add ${stock} to the watchlist`;
-      } else {
-        document.querySelector("#message").innerHTML = result.error;
+        event.target.innerHTML = `Add ${stock} to watchlist`;
+        //   } else {
+        //     document.querySelector("#message").innerHTML = result.error;
       }
     });
   }

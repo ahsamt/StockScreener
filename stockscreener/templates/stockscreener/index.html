@@ -34,14 +34,12 @@
         </div>
 
         <br />
+        <form>
+          {{ notes }}
+          <button type="submit">Save notes</button>
+        </form>
 
-        {% if notes %}
-        <h6>Notes</h6>
-        <p>{{ notes }}</p>
-        <a href="/" class="notes_link">Edit notes</a>
         {% else %}
-        <a href="/" class="notes_link">Add notes</a>
-        {% endif %} {% else %}
         <a
           href="#"
           class="watchlist"
