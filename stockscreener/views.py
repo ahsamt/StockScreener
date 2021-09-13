@@ -21,7 +21,7 @@ import plotly.graph_objects as go
 import pandas as pd
 import yfinance as yf
 
-from .utils import make_graph_1, make_graph_2, prep_graph_data
+from .utils import get_change_info, make_graph_1, make_graph_2, prep_graph_data
 
 class StockForm(forms.Form):
     stock = forms.CharField(label = "Stock name", max_length=5)
@@ -38,36 +38,23 @@ def index(request):
                 stock = stockForm.cleaned_data['stock'].upper()
                 
                 data1, data2 = prep_graph_data(stock) 
-                closing_price = round(data1[stock].iloc[-1],2)
-                previous_price = round(data1[stock].iloc[-2],2)
-                price_dif = round(previous_price - closing_price, 2)
-                perc_dif = round(price_dif/previous_price*100, 2) 
-                if price_dif > 0:
-                    sign = "+"
-                else:
-                    sign = "-"
-                change = (f"{sign}${price_dif}  ({sign}{perc_dif}%)")
-                
-                graph1 = make_graph_1(data1, stock)
-                graph2 = make_graph_2(data2, stock)
+                closing_price, change = get_change_info(data1, stock)
+                graph1 = make_graph_1(data1, stock, 470, 630)
+                graph2 = make_graph_2(data2, stock, 470, 630)
 
                 watchlisted = False
                 stockID = None
-                notes = ""
 
                 if user.is_authenticated:
                     searchObj = SavedSearch.objects.filter(user = request.user, stock = stock)
                     if len(searchObj):                      
                         watchlisted = True
                         stockID =  searchObj[0].id
-                        notes = searchObj[0].notes
-
 
             context = {
                 "stockForm": stockForm, 
                 "stock":stock,
                 "stockID":stockID,
-                "notes":notes,
                 "closing_price":closing_price,
                 "change": change,
                 "watchlisted":watchlisted, 
@@ -132,15 +119,24 @@ def watchlist(request):
             watchlist=sorted(watchlist, key = lambda p: (p.date), reverse=True)
             for item in watchlist:   
                 stock = item.stock 
-                stockID = item.id 
+                
                 watchlist_temp = []          
                 data1, data2 = prep_graph_data(stock)
                 watchlist_temp.append (stock),
-                graph1 = make_graph_1(data1, stock)              
+                closing_price, change = get_change_info(data1, stock)
+                watchlist_temp.append(closing_price)
+                watchlist_temp.append(change)
+                graph1 = make_graph_1(data1, stock, 500, 750)              
                 watchlist_temp.append (graph1)
-                graph2 = make_graph_2(data2, stock)
+                graph2 = make_graph_2(data2, stock, 500, 750)
                 watchlist_temp.append (graph2)
-                watched_stocks.append(watchlist_temp)    
+                notes = item.notes 
+                watchlist_temp.append(notes) 
+                stockID = item.id 
+                watchlist_temp.append(stockID)
+                 
+                watched_stocks.append(watchlist_temp) 
+                
         return render(request, "stockscreener/watchlist.html", {'watched_stocks':watched_stocks})
 
 @csrf_exempt

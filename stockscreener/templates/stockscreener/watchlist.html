@@ -1,22 +1,50 @@
 {% extends "stockscreener/layout.html" %} {% load static %}{% block body %}
-<h2>{{ user }}'s watchlist</h2>
+<h2 class="mb-3">{{ user }}'s watchlist</h2>
 <!-- prettier-ignore -->
-{% if user.is_authenticated %} {% if watched_stocks %} 
+{% if user.is_authenticated %} {% if watched_stocks %}
 
-Your watched stocks: 
+<h6 class="mb-3">Your watched stocks:</h6>
 {% for item in watched_stocks %}
 <div class="watched_item">
-  <h3>{{ item.0 }}</h3>
-  {{ item.1| safe }}
-  <br />
-  {{ item.2| safe }}
-  <br />
-  {% endfor %}
-</div>
-{% else %}
-<p>You do not have any stocks in your watchlist</p>
-{% endif %} {% endif %}
-<br />
+  <div class="row">
+    <div class="col">
+      <div class="card mb-4">
+        <div class="card-body">
+          <!-- prettier-ignore -->
+          {% include "stockscreener/stock_details.html" with stock=item.0 change=item.2 closing_price=item.1 %}
+        </div>
+      </div>
+      <h5>Your notes for {{ item.0 }}:</h5>
+      <form
+        class="edit_notes"
+        id="editNotes{{ item.6 }}"
+        data-stock_id="{{ item.6 }}"
+      >
+        <div class="form-group">
+          <textarea
+            class="edit_content form-control"
+            id="editContent{{ item.6 }}"
+            rows="12"
+          >
+{{ item.5 }}
+          </textarea>
+          <button id="editNotesButton" type="submit">Save notes</button>
+        </div>
+      </form>
+    </div>
 
-<br />
-{% endblock %}
+    <div class="col">
+      {% include "stockscreener/graphs.html" with graph1=item.3 graph2=item.4 %}
+    </div>
+    <!-- prettier-ignore -->
+
+    {% endfor %}
+  </div>
+  {% else %}
+  <p>You do not have any stocks in your watchlist</p>
+  {% endif %} {% endif %}
+  <br />
+
+  <br />
+  {% endblock %}
+</div>

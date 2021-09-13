@@ -41,7 +41,19 @@ def prep_graph_data(stock):
 
     return(close_6months, norm)
 
-def make_graph_1(data, stock):
+def get_change_info(data, stock):
+    closing_price = round(data[stock].iloc[-1],2)
+    previous_price = round(data[stock].iloc[-2],2)
+    price_dif = round(previous_price - closing_price, 2)
+    perc_dif = round(price_dif/previous_price*100, 2) 
+    if price_dif > 0:
+        sign = "+"
+    else:
+        sign = "-"
+    change = (f"{sign}${price_dif}  ({sign}{perc_dif}%)")
+    return (closing_price, change)   
+         
+def make_graph_1(data, stock, height, width):
     fig = go.Figure()
     fig.add_trace(go.Scatter(name=stock, x=data["Date"], y=data[stock])) 
     fig.add_trace(go.Scatter(name="20 day moving avg", x=data["Date"], y=data["moving_avg_20"])) 
@@ -69,10 +81,10 @@ def make_graph_1(data, stock):
     # textposition="bottom center"
     # ))
                 
-    graph = fig.to_html(full_html=False, default_height=500, default_width=700)
+    graph = fig.to_html(full_html=False, default_height=height, default_width=width)
     return graph
 
-def make_graph_2(data, stock):
+def make_graph_2(data, stock, height, width):
     fig = go.Figure()
     fig.add_trace(go.Scatter(name=stock, x=data["Date"], y=data[stock]))
     fig.add_trace(go.Scatter(name="S&P 500", x=data["Date"], y=data["^GSPC"]))
@@ -90,5 +102,5 @@ def make_graph_2(data, stock):
                             "stepmode": "backward"}
                         ]}}) 
 
-    graph = fig.to_html(full_html=False, default_height=500, default_width=700)
+    graph = fig.to_html(full_html=False, default_height=height, default_width=width)
     return graph

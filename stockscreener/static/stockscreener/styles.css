@@ -9,7 +9,7 @@ body {
 button {
   transition: ease-in-out 200ms;
   border-radius: 4px;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+  box-shadow: rgba(164, 164, 167, 0.25) 0px 50px 100px -20px,
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
     rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
   background-color: #325c84;
@@ -22,10 +22,36 @@ button:hover {
   background-color: #0a4902;
   color: white;
 }
+.watchlist {
+  border-radius: 4px;
+  box-shadow: rgba(164, 164, 167, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+  color: #325c84;
+  text-decoration: none;
+  margin: 10px 0 10px 0;
+  padding: 4px 8px;
+}
+.search-form {
+  display: block;
+  margin: auto;
+  text-align: center;
+}
+.index-card {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  width: 500px;
+}
 
 .closing_price {
   color: crimson;
 }
 .price_change {
   color: orange;
+}
+
+.edit_content {
+  text-align: left;
+  margin: 0;
 }
