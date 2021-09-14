@@ -2,7 +2,26 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".watchlist").forEach((watch_button) => {
     watch_button.addEventListener("click", (event) => update_watchlist(event));
   });
+  document.querySelectorAll(".edit_notes_button").forEach((edit_button) => {
+    edit_button.addEventListener("click", (event) => update_notes(event));
+  });
 });
+
+function update_notes(event) {
+  event.preventDefault();
+  let stockID = event.target.dataset.stock_id;
+  let updated_notes = document.querySelector(`#editContent${stockID}`).value;
+  fetch(`/saved_searches/${stockID}`, {
+    method: "PUT",
+    body: JSON.stringify({
+      notes: updated_notes,
+    }),
+  }).then((response) => {
+    if (response.ok) {
+      console.log(response);
+    }
+  });
+}
 
 function update_watchlist(event) {
   event.preventDefault();
@@ -32,7 +51,7 @@ function update_watchlist(event) {
       });
   } else {
     fetch(`/saved_searches/${stockID}`, {
-      method: "Delete",
+      method: "DELETE",
     }).then((response) => {
       if (response.ok) {
         document.querySelector("#message").innerHTML =
