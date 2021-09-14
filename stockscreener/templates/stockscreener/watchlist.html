@@ -42,11 +42,9 @@
     <div class="col">
       {% include "stockscreener/graphs.html" with graph1=item.3 graph2=item.4 %}
     </div>
-    <!-- prettier-ignore -->
-
-    {% endfor %}
   </div>
-  {% else %}
+  <hr />
+  {% endfor %} {% else %}
   <p>You do not have any stocks in your watchlist</p>
   {% endif %} {% endif %}
   <br />

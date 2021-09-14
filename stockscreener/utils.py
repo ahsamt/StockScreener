@@ -18,8 +18,8 @@ def prep_graph_data(stock):
     start_date = end_date + relativedelta(months = -num_months)
     start_date_internal = start_date + relativedelta(months= -3) 
     start_date_datetime = datetime.combine(start_date, datetime.min.time()) 
-    # stocks = yf.download(ticker, start = start_date_internal, end = end_date)
-    # stocks.to_csv("stocks.csv")
+    stocks = yf.download(ticker, start = start_date_internal, end = end_date)
+    stocks.to_csv("stocks.csv")
     stocks = pd.read_csv("stocks.csv", header = [0, 1], index_col = [0], parse_dates = [0])
     stocks.columns = stocks.columns.to_flat_index()
     stocks.columns = pd.MultiIndex.from_tuples(stocks.columns)
@@ -49,10 +49,10 @@ def get_change_info(data, stock):
     if price_dif > 0:
         sign = "+"
     else:
-        sign = "-"
+        sign = ""
     change = (f"{sign}${price_dif}  ({sign}{perc_dif}%)")
     return (closing_price, change)   
-         
+
 def make_graph_1(data, stock, height, width):
     fig = go.Figure()
     fig.add_trace(go.Scatter(name=stock, x=data["Date"], y=data[stock])) 

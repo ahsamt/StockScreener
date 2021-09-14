@@ -18,7 +18,9 @@
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand" id="username" href="#"> {{ user }}</a>
+      <a class="navbar-brand" id="username" href="{% url 'index' %}">
+        {{ user }}</a
+      >
       <button
         class="navbar-toggler"
         type="button"

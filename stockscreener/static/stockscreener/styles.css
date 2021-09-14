@@ -51,6 +51,9 @@ button:hover {
   color: orange;
 }
 
+.watched_item {
+  margin-bottom: 20px;
+}
 .edit_content {
   text-align: left;
   margin: 0;
