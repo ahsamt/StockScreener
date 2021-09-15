@@ -13,13 +13,13 @@ button {
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
     rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
   background-color: #325c84;
-  margin: 10px 0 20px 0;
+  margin: 10px 0 5px 0;
   padding: 2px 11px;
   color: white;
 }
 
 button:hover {
-  background-color: #0a4902;
+  background-color: #99103d;
   color: white;
 }
 .watchlist {
@@ -27,11 +27,13 @@ button:hover {
   box-shadow: rgba(164, 164, 167, 0.25) 0px 50px 100px -20px,
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
     rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+  margin: 10px 0 10px 0;
   color: #325c84;
   text-decoration: none;
-  margin: 10px 0 10px 0;
   padding: 4px 8px;
+  background-color: white;
 }
+
 .search-form {
   display: block;
   margin: auto;
@@ -45,7 +47,7 @@ button:hover {
 }
 
 .closing_price {
-  color: crimson;
+  color: #cc0000;
 }
 .price_change {
   color: orange;

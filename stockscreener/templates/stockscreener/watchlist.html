@@ -11,36 +11,42 @@
       <div class="card mb-4">
         <div class="card-body">
           <!-- prettier-ignore -->
-          {% include "stockscreener/stock_details.html" with stock=item.0 change=item.2 closing_price=item.1 %}
+          {% include "stockscreener/stock_details.html" with stock=item.stock change=item.change closing_price=item.closing_price %}
+          <br />
+          <div class="card-link"></div>
         </div>
       </div>
-      <h5>Your notes for {{ item.0 }}:</h5>
+      <h5>Your notes for {{ item.stock }}:</h5>
       <form
         class="edit_notes"
-        id="editNotes{{ item.6 }}"
-        data-stock_id="{{ item.6 }}"
+        id="editNotes{{ item.stockID }}"
+        data-stock_id="{{ item.stockID }}"
       >
         <div class="form-group">
           <textarea
             class="edit_content form-control"
-            id="editContent{{ item.6 }}"
+            id="editContent{{ item.stockID }}"
             rows="12"
           >
-{{ item.5 }}
+{{ item.notes }}
           </textarea>
           <button
             class="edit_notes_button"
             type="submit"
-            data-stock_id="{{ item.6 }}"
+            data-stock_id="{{ item.stockID }}"
           >
             Save notes
           </button>
         </div>
       </form>
+      <button class="remove_from_watchlist" data-stock_id="{{ item.stockID }}">
+        Remove {{ item.stock }} from watchlist
+      </button>
     </div>
 
     <div class="col">
-      {% include "stockscreener/graphs.html" with graph1=item.3 graph2=item.4 %}
+      <!-- prettier-ignore -->
+      {% include "stockscreener/graphs.html" with graph1=item.graph1 graph2=item.graph2 %}
     </div>
   </div>
   <hr />

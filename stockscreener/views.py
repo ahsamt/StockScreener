@@ -120,22 +120,21 @@ def watchlist(request):
             for item in watchlist:   
                 stock = item.stock 
                 
-                watchlist_temp = []          
-                data1, data2 = prep_graph_data(stock)
-                watchlist_temp.append (stock),
-                closing_price, change = get_change_info(data1, stock)
-                watchlist_temp.append(closing_price)
-                watchlist_temp.append(change)
-                graph1 = make_graph_1(data1, stock, 500, 750)              
-                watchlist_temp.append (graph1)
-                graph2 = make_graph_2(data2, stock, 500, 750)
-                watchlist_temp.append (graph2)
-                notes = item.notes 
-                watchlist_temp.append(notes) 
-                stockID = item.id 
-                watchlist_temp.append(stockID)
-                 
-                watched_stocks.append(watchlist_temp) 
+                watchlist_temp = {} 
+                watchlist_temp["stock"] = stock
+                watchlist_temp["data1"], watchlist_temp["data2"] = prep_graph_data(stock)     
+                watchlist_temp["closing_price"], watchlist_temp["change"] = get_change_info(watchlist_temp["data1"], stock)
+        
+                watchlist_temp["graph1"] = make_graph_1(watchlist_temp["data1"], stock, 500, 750)              
+                
+                watchlist_temp["graph2"] = make_graph_2(watchlist_temp["data2"], stock, 500, 750)
+                
+                watchlist_temp["notes"] = item.notes 
+              
+                watchlist_temp["stockID"]= item.id 
+
+                watched_stocks.append(watchlist_temp)    
+                
                 
         return render(request, "stockscreener/watchlist.html", {'watched_stocks':watched_stocks})
 
