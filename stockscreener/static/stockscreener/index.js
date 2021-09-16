@@ -6,11 +6,15 @@ document.addEventListener("DOMContentLoaded", () => {
     .querySelectorAll(".remove_from_watchlist")
     .forEach((remove_button) => {
       remove_button.addEventListener("click", (event) => {
+        let stockID = event.target.dataset.stock_id;
         let confirm = prompt(
-          "Are you sure you want to remove this item from your watchlist? (y/n)"
+          `Are you sure you want to remove this stock from your watchlist? This will permanently delete any notes you have saved. (y/n)`
         );
         if (confirm === "y") {
           update_watchlist(event);
+          document.querySelector(
+            `#watchedItem${stockID}`
+          ).style.animationPlayState = "running";
         } else if (confirm === "n") {
           alert("No problem, we'll keep it where it is!");
         } else {
@@ -71,8 +75,9 @@ function update_watchlist(event) {
     }).then((response) => {
       if (response.ok) {
         event.target.dataset.stock_id = "None";
-        event.target.innerHTML = `Add ${stock} to watchlist`;
-
+        if (stock !== undefined) {
+          event.target.innerHTML = `Add ${stock} to watchlist`;
+        }
         //   } else {
         //     document.querySelector("#message").innerHTML = result.error;
       }
