@@ -5,6 +5,7 @@
 
 <h6 class="mb-3">Your watched stocks:</h6>
 {% for item in watched_stocks %}
+
 <div class="watched_item" id="watchedItem{{ item.stockID }}">
   <div class="row">
     <div class="col">
@@ -12,10 +13,9 @@
         <div class="card-body">
           <!-- prettier-ignore -->
           {% include "stockscreener/stock_details.html" with stock=item.stock change=item.change closing_price=item.closing_price %}
-          <br />
-          <div class="card-link"></div>
         </div>
       </div>
+
       <h5>Your notes for {{ item.stock }}:</h5>
       <form
         class="edit_notes"
@@ -28,7 +28,7 @@
             id="editContent{{ item.stockID }}"
             rows="12"
           >
-{{ item.notes }}
+            {{ item.notes }}
           </textarea>
           <button
             class="edit_notes_button"
@@ -39,21 +39,23 @@
           </button>
         </div>
       </form>
+
       <button class="remove_from_watchlist" data-stock_id="{{ item.stockID }}">
         Remove {{ item.stock }} from watchlist
       </button>
+
       <p class="message" id="message_notes"></p>
     </div>
-
     <div class="col">
       <!-- prettier-ignore -->
       {% include "stockscreener/graphs.html" with graph1=item.graph1 graph2=item.graph2 %}
     </div>
+    <br />
+    <br />
+    <hr />
   </div>
-  <br />
-  <br />
-  <hr />
+
+  {% endfor %} {% else %}
+  <p>You do not have any stocks in your watchlist</p>
+  {% endif %} {% endif %} {% endblock %}
 </div>
-{% endfor %} {% else %}
-<p>You do not have any stocks in your watchlist</p>
-{% endif %} {% endif %} {% endblock %}
