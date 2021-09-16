@@ -46,7 +46,8 @@ button:hover {
   width: 500px;
 }
 
-.closing_price {
+.closing_price,
+.message {
   color: #cc0000;
 }
 .price_change {

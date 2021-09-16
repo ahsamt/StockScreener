@@ -2,6 +2,23 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".watchlist").forEach((watch_button) => {
     watch_button.addEventListener("click", (event) => update_watchlist(event));
   });
+  document
+    .querySelectorAll(".remove_from_watchlist")
+    .forEach((remove_button) => {
+      remove_button.addEventListener("click", (event) => {
+        let confirm = prompt(
+          "Are you sure you want to remove this item from your watchlist? (y/n)"
+        );
+        if (confirm === "y") {
+          update_watchlist(event);
+        } else if (confirm === "n") {
+          alert("No problem, we'll keep it where it is!");
+        } else {
+          alert("Sorry, we didn't get it! Please try again.");
+        }
+      });
+    });
+
   document.querySelectorAll(".edit_notes_button").forEach((edit_button) => {
     edit_button.addEventListener("click", (event) => update_notes(event));
   });
@@ -18,7 +35,8 @@ function update_notes(event) {
     }),
   }).then((response) => {
     if (response.ok) {
-      console.log(response);
+      document.querySelector("#message_notes").innerHTML =
+        "Notes saved successfully";
     }
   });
 }
@@ -40,8 +58,6 @@ function update_watchlist(event) {
       .then((response) => response.json())
       .then((result) => {
         if (result.message === "Search saved successfully") {
-          document.querySelector("#message").innerHTML =
-            "Search saved successfully";
           event.target.dataset.stock_id = result.id;
           event.target.innerHTML = `Remove ${stock} from watchlist`;
 
@@ -54,8 +70,6 @@ function update_watchlist(event) {
       method: "DELETE",
     }).then((response) => {
       if (response.ok) {
-        document.querySelector("#message").innerHTML =
-          "Search deleted successfully";
         event.target.dataset.stock_id = "None";
         event.target.innerHTML = `Add ${stock} to watchlist`;
 

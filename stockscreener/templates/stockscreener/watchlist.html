@@ -42,6 +42,7 @@
       <button class="remove_from_watchlist" data-stock_id="{{ item.stockID }}">
         Remove {{ item.stock }} from watchlist
       </button>
+      <p class="message" id="message_notes"></p>
     </div>
 
     <div class="col">
@@ -50,11 +51,11 @@
     </div>
   </div>
   <hr />
-  {% endfor %} {% else %}
-  <p>You do not have any stocks in your watchlist</p>
-  {% endif %} {% endif %}
-  <br />
-
-  <br />
-  {% endblock %}
 </div>
+{% endfor %} {% else %}
+<p>You do not have any stocks in your watchlist</p>
+{% endif %} {% endif %}
+<br />
+
+<br />
+{% endblock %}
