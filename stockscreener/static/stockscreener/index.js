@@ -15,6 +15,8 @@ document.addEventListener("DOMContentLoaded", () => {
           document.querySelector(
             `#watchedItem${stockID}`
           ).style.animationPlayState = "running";
+          document.querySelector(`#stock_link${stockID}`).style.display =
+            "none";
         } else if (confirm === "n") {
           alert("No problem, we'll keep it where it is!");
         } else {

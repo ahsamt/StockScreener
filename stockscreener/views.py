@@ -125,9 +125,9 @@ def watchlist(request):
                 watchlist_temp["data1"], watchlist_temp["data2"] = prep_graph_data(stock)     
                 watchlist_temp["closing_price"], watchlist_temp["change"] = get_change_info(watchlist_temp["data1"], stock)
         
-                watchlist_temp["graph1"] = make_graph_1(watchlist_temp["data1"], stock, 500, 750)              
+                watchlist_temp["graph1"] = make_graph_1(watchlist_temp["data1"], stock, 530, 870)              
                 
-                watchlist_temp["graph2"] = make_graph_2(watchlist_temp["data2"], stock, 500, 750)
+                watchlist_temp["graph2"] = make_graph_2(watchlist_temp["data2"], stock, 530, 870)
                 
                 watchlist_temp["notes"] = item.notes 
               

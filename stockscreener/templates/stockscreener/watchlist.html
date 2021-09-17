@@ -4,6 +4,17 @@
 {% if user.is_authenticated %} {% if watched_stocks %}
 
 <h6 class="mb-3">Your watched stocks:</h6>
+<div class="mb-3">
+  {% for item in watched_stocks %}
+  <a
+    href="#watchedItem{{ item.stockID }}"
+    class="stock_link"
+    id="stock_link{{ item.stockID }}"
+  >
+    {{ item.stock }}
+  </a>
+  {% endfor %}
+</div>
 {% for item in watched_stocks %}
 
 <div class="watched_item" id="watchedItem{{ item.stockID }}">
