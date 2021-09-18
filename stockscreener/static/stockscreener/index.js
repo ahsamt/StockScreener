@@ -60,8 +60,10 @@ function update_notes(event) {
     }),
   }).then((response) => {
     if (response.ok) {
-      document.querySelector("#message_notes").innerHTML =
-        "Notes saved successfully";
+      let time = document.querySelector("#clock").innerHTML;
+      document.querySelector(
+        "#message_notes"
+      ).innerHTML = `Notes saved at ${time}`;
     }
   });
 }

@@ -3,7 +3,7 @@
 <!-- prettier-ignore -->
 {% if user.is_authenticated %} {% if watched_stocks %}
 
-<h6 class="mb-3">Your watched stocks:</h6>
+<h3 class="mb-3">Your watched stocks:</h3>
 <div class="mb-3">
   {% for item in watched_stocks %}
   <a
@@ -27,7 +27,7 @@
         </div>
       </div>
 
-      <h5>Your notes for {{ item.stock }}:</h5>
+      <h3>Your notes for {{ item.stock }}:</h3>
       <form
         class="edit_notes"
         id="editNotes{{ item.stockID }}"
@@ -55,7 +55,7 @@
         Remove {{ item.stock }} from watchlist
       </button>
 
-      <p class="message" id="message_notes"></p>
+      <p class="message mt-2" id="message_notes"></p>
     </div>
     <div class="col">
       <!-- prettier-ignore -->

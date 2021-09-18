@@ -33,6 +33,17 @@ h1 {
   padding: 20px 0px 5px 0px;
 }
 
+h2 {
+  font-size: 27px;
+  padding: 20px 0 5px 0;
+  text-transform: capitalize;
+  font-weight: 550;
+}
+
+h3 {
+  font-size: 20px;
+  padding: 5px 0 5px 0;
+}
 .welcome {
   text-align: center;
 }
@@ -82,7 +93,7 @@ h1 {
 #clock {
   border-radius: 4px;
   box-shadow: var(--custom-shadow);
-  margin: 10px 20px 10px 0px;
+  margin: 0px 20px 0px 0px;
   text-decoration: none;
   padding: 6px 10px;
   color: #325c84;
