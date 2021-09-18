@@ -21,6 +21,7 @@
       <a class="navbar-brand" id="username" href="{% url 'index' %}">
         {{ user }}</a
       >
+
       <button
         class="navbar-toggler"
         type="button"
@@ -54,13 +55,17 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'register' %}">Register</a>
           </li>
+
           {% endif %}
         </ul>
       </div>
     </div>
   </nav>
   <body>
-    <div class="container">{% block body %} {% endblock %}</div>
+    <div class="container">
+      <span id="clock">Thursday, 16 September 16:00</span>
+      {% block body %} {% endblock %}
+    </div>
   </body>
   <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"

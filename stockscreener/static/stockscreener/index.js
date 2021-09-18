@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+  setInterval(show_clock, 1000);
   document.querySelectorAll(".watchlist").forEach((watch_button) => {
     watch_button.addEventListener("click", (event) => update_watchlist(event));
   });
@@ -29,6 +30,34 @@ document.addEventListener("DOMContentLoaded", () => {
     edit_button.addEventListener("click", (event) => update_notes(event));
   });
 });
+
+function format_time(time) {
+  //takes in hours/second/minutes as 1- or 2-digit number and converts it to a 2-digit number
+  return time < 10 ? "0" + time : time;
+}
+
+function get_time() {
+  let week = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+
+  let now = new Date();
+  let day = week[now.getDay()];
+  let hours = format_time(now.getHours());
+  let minutes = format_time(now.getMinutes());
+
+  return `${day}, ${hours}:${minutes}`;
+}
+
+function show_clock() {
+  document.querySelector("#clock").innerHTML = get_time();
+}
 
 function update_notes(event) {
   event.preventDefault();
