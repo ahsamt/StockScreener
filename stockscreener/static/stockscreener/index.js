@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   setInterval(show_clock, 1000);
+
   document.querySelectorAll(".watchlist").forEach((watch_button) => {
     watch_button.addEventListener("click", (event) => update_watchlist(event));
   });

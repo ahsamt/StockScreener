@@ -19,13 +19,22 @@ button {
   box-shadow: var(--custom-shadow);
   background-color: #325c84;
   margin: 10px 0 5px 0;
-  padding: 2px 11px;
+  padding: 3px 11px;
   color: white;
 }
 
 button:hover {
   background-color: #99103d;
   color: white;
+}
+
+h1 {
+  font-size: 30px;
+  padding: 20px 0px 5px 0px;
+}
+
+.welcome {
+  text-align: center;
 }
 .watchlist {
   border-radius: 4px;
@@ -89,6 +98,10 @@ button:hover {
   font-weight: bold;
   font-size: 16px;
   background-color: #325c84;
+}
+
+#searchButton {
+  margin: 14px 0;
 }
 @keyframes hide {
   0% {
