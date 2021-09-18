@@ -1,17 +1,22 @@
 :root {
-  background-color: #fff2e5;
+  --background-color: #fff2e5;
+  --custom-shadow: rgba(164, 164, 167, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 }
 
 body {
   background: var(--background-color);
+  font-family: "Open Sans", sans-serif;
+  font-size: 15px;
 }
-
+.navbar {
+  background-color: #325c84;
+}
 button {
   transition: ease-in-out 200ms;
   border-radius: 4px;
-  box-shadow: rgba(164, 164, 167, 0.25) 0px 50px 100px -20px,
-    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
-    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+  box-shadow: var(--custom-shadow);
   background-color: #325c84;
   margin: 10px 0 5px 0;
   padding: 2px 11px;
@@ -24,9 +29,7 @@ button:hover {
 }
 .watchlist {
   border-radius: 4px;
-  box-shadow: rgba(164, 164, 167, 0.25) 0px 50px 100px -20px,
-    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
-    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+  box-shadow: var(--custom-shadow);
   margin: 10px 0 10px 0;
   color: #325c84;
   text-decoration: none;
@@ -57,7 +60,7 @@ button:hover {
 .watched_item {
   margin-bottom: 20px;
   animation-name: hide;
-  animation-duration: 2s;
+  animation-duration: 1s;
   animation-fill-mode: forwards;
   animation-play-state: paused;
 }
@@ -66,17 +69,26 @@ button:hover {
   margin: 0;
 }
 
-.stock_link {
+.stock_link,
+#clock {
   border-radius: 4px;
-  box-shadow: rgba(164, 164, 167, 0.25) 0px 50px 100px -20px,
-    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
-    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+  box-shadow: var(--custom-shadow);
   margin: 10px 20px 10px 0px;
-  color: #325c84;
   text-decoration: none;
   padding: 6px 10px;
-
+  color: #325c84;
   background-color: white;
+}
+
+#clock {
+  position: fixed;
+  bottom: 0;
+  margin: 3px;
+  right: 0;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  background-color: #325c84;
 }
 @keyframes hide {
   0% {

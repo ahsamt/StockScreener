@@ -37,22 +37,11 @@ function format_time(time) {
 }
 
 function get_time() {
-  let week = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
-
   let now = new Date();
-  let day = week[now.getDay()];
   let hours = format_time(now.getHours());
   let minutes = format_time(now.getMinutes());
 
-  return `${day}, ${hours}:${minutes}`;
+  return `${hours}:${minutes}`;
 }
 
 function show_clock() {

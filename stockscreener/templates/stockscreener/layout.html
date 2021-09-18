@@ -12,15 +12,19 @@
       integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
       crossorigin="anonymous"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="{% static 'stockscreener/styles.css' %}" />
     <title>{% block title %}Stock Screener{% endblock %}</title>
   </head>
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" id="username" href="{% url 'index' %}">
-        {{ user }}</a
-      >
+      <a class="navbar-brand" href="{% url 'index' %}">StockScreener</a>
 
       <button
         class="navbar-toggler"
@@ -36,6 +40,11 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link active" id="username" href="{% url 'index' %}"
+              >{{ user }}</a
+            >
+          </li>
           <li class="nav-item">
             <a
               class="nav-link active"
@@ -63,7 +72,7 @@
   </nav>
   <body>
     <div class="container">
-      <span id="clock">Thursday, 16 September 16:00</span>
+      <span id="clock"></span>
       {% block body %} {% endblock %}
     </div>
   </body>
