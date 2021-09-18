@@ -11,7 +11,12 @@ class SavedSearch(models.Model):
     date = models.DateTimeField(default = django.utils.timezone.now)
     notes = models.TextField(max_length=500, blank = True)
     user = models.ForeignKey("User", on_delete=models.CASCADE, related_name="watchlist")
-    
+   
+    class Meta:
+       constraints = [
+           models.UniqueConstraint(fields=['stock', 'user'], name = "unique_searches")
+       ]
+
     def serialize(self):
         return {
             "id":self.id,

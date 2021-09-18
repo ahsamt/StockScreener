@@ -69,8 +69,9 @@ def make_graph_1(data, stock, height, width):
                     {"count": 1, "label": "1M", "step": "month",
                         "stepmode": "backward"},
                     {"count": 6, "label": "6M", "step": "month",
-                        "stepmode": "backward"}
-                ]}}) 
+                        "stepmode": "backward"},
+                    ]
+            }}) 
                 
     # fig.add_trace(go.Scatter(
     # x=[pd.to_datetime("2021-07-09")],
