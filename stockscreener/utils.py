@@ -4,6 +4,12 @@ import pandas as pd
 import plotly.graph_objects as go
 import yfinance as yf
 
+buttons = [{"count": 5, "label": "5D", "step": "day","stepmode": "backward"}, 
+{"count": 1, "label": "1M", "step": "month","stepmode": "backward"},
+{"count": 3, "label": "3M", "step": "month","stepmode": "backward"},
+{"count": 6, "label": "6M", "step": "month","stepmode": "backward"},
+{"count": 1, "label": "1Y", "step": "year","stepmode": "backward"},]
+
 def moving_average(series, window_size):
     
     windows = series.rolling(window_size)
@@ -12,7 +18,7 @@ def moving_average(series, window_size):
 
 def prep_graph_data(stock):
     ticker = [stock, "^GSPC"]
-    num_months = 6
+    num_months = 12
     end_date = date.today()
                 
     start_date = end_date + relativedelta(months = -num_months)
@@ -30,47 +36,38 @@ def prep_graph_data(stock):
     close["moving_avg_50"] = moving_average(close[stock].copy(), 50)
 
     mask = (close.index >= start_date_datetime)
-    close_6months = close.loc[mask]
-    norm = close_6months.div(close_6months.iloc[0]).mul(100)
+    close_spec = close.loc[mask]
+    norm = close_spec.div(close_spec.iloc[0]).mul(100)
     norm = norm.reset_index()
-    close_6months = close_6months.reset_index()
+    close_spec = close_spec.reset_index()
     # close_6months["buy_point"] = (close_6months["moving_avg_20"].round() == close_6months["moving_avg_50"].round())
     # close_6months["inc_20"] = close_6months["moving_avg_20"].diff()>0
     # close_6months["inc_50"] = close_6months["moving_avg_50"].diff()>0
-    close_6months.to_csv("close.csv")
+    close_spec.to_csv("close.csv")
 
-    return(close_6months, norm)
+    return(close_spec, norm)
 
 def get_change_info(data, stock):
-    closing_price = round(data[stock].iloc[-1],2)
-    previous_price = round(data[stock].iloc[-2],2)
-    price_dif = round(previous_price - closing_price, 2)
+    closing_price = data[stock].iloc[-1]
+    previous_price = data[stock].iloc[-2]
+    price_dif = closing_price - previous_price
     perc_dif = round(price_dif/previous_price*100, 2) 
     if price_dif > 0:
         sign = "+"
     else:
         sign = ""
-    change = (f"{sign}${price_dif}  ({sign}{perc_dif}%)")
-    return (closing_price, change)   
+    change = (f"{sign}${round(price_dif,2)}  ({sign}{perc_dif}%)")
+    return (round(closing_price,2), change)   
 
 def make_graph_1(data, stock, height, width):
     fig = go.Figure()
     fig.add_trace(go.Scatter(name=stock, x=data["Date"], y=data[stock])) 
     fig.add_trace(go.Scatter(name="20 day moving avg", x=data["Date"], y=data["moving_avg_20"])) 
     fig.add_trace(go.Scatter(name="50 day moving avg", x=data["Date"], y=data["moving_avg_50"])) 
-    fig.update_layout(title = f"{stock} prices over the past 6 months", template="seaborn", legend = {"orientation": "h","xanchor":"left"},
+    fig.update_layout(title = f"{stock} prices over the past year", template="seaborn", legend = {"orientation": "h","xanchor":"left"},
         xaxis = {
             "rangeselector": {
-                "buttons": [
-                    {"count": 7, "label": "1W", "step": "day",
-                       "stepmode": "backward"},
-                    {"count": 14, "label": "2W", "step": "day",
-                        "stepmode": "backward"},
-                    {"count": 1, "label": "1M", "step": "month",
-                        "stepmode": "backward"},
-                    {"count": 6, "label": "6M", "step": "month",
-                        "stepmode": "backward"},
-                    ]
+                "buttons": buttons
             }}) 
                 
     # fig.add_trace(go.Scatter(
@@ -89,19 +86,10 @@ def make_graph_2(data, stock, height, width):
     fig = go.Figure()
     fig.add_trace(go.Scatter(name=stock, x=data["Date"], y=data[stock]))
     fig.add_trace(go.Scatter(name="S&P 500", x=data["Date"], y=data["^GSPC"]))
-    fig.update_layout(title = f"{stock} trading vs S&P 500 trading over the past 6 months", template="seaborn", legend = {"orientation": "h","xanchor":"left"},
+    fig.update_layout(title = f"{stock} trading vs S&P 500 trading over the past year", template="seaborn", legend = {"orientation": "h","xanchor":"left"},
                 xaxis = {
                     "rangeselector": {
-                        "buttons": [
-                            {"count": 7, "label": "1W", "step": "day",
-                            "stepmode": "backward"},
-                            {"count": 14, "label": "2W", "step": "day",
-                             "stepmode": "backward"},
-                            {"count": 1, "label": "1M", "step": "month",
-                            "stepmode": "backward"},
-                            {"count": 6, "label": "6M", "step": "month",
-                            "stepmode": "backward"}
-                        ]}}) 
+                        "buttons": buttons }}) 
 
     graph = fig.to_html(full_html=False, default_height=height, default_width=width)
     return graph
