@@ -18,13 +18,19 @@
       href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap"
       rel="stylesheet"
     />
+    <script
+      src="https://kit.fontawesome.com/12b86829fe.js"
+      crossorigin="anonymous"
+    ></script>
     <link rel="stylesheet" href="{% static 'stockscreener/styles.css' %}" />
     <title>{% block title %}Stock Screener{% endblock %}</title>
   </head>
 
   <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="{% url 'index' %}">StockScreener</a>
+      <a class="navbar-brand" id="top" href="{% url 'index' %}"
+        >StockScreener</a
+      >
 
       <button
         class="navbar-toggler"
@@ -73,6 +79,7 @@
   <body>
     <div class="container">
       <span id="clock"></span>
+      <a href="#top" id="topButton"><i class="fas fa-arrow-up"></i></a>
       {% block body %} {% endblock %}
     </div>
   </body>

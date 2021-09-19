@@ -98,12 +98,13 @@ h3 {
   padding: 6px 10px;
   color: #325c84;
   background-color: white;
+  z-index: 99;
 }
 
 #clock {
   position: fixed;
   bottom: 0;
-  margin: 3px;
+  margin: 5px;
   right: 0;
   color: white;
   font-weight: bold;
@@ -114,6 +115,23 @@ h3 {
 #searchButton {
   margin: 14px 0;
 }
+
+#topButton {
+  display: none;
+  position: fixed;
+  z-index: 99;
+  bottom: 45px;
+  right: 5px;
+  padding: 5px;
+  text-decoration: none;
+  color: #325c84;
+  background-color: white;
+  font-weight: bold;
+  font-size: 18px;
+  box-shadow: var(--custom-shadow);
+  border-radius: 4px;
+}
+
 @keyframes hide {
   0% {
     opacity: 1;

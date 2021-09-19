@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   setInterval(show_clock, 1000);
-
+  window.addEventListener("scroll", () => top_scroll());
   document.querySelectorAll(".watchlist").forEach((watch_button) => {
     watch_button.addEventListener("click", (event) => update_watchlist(event));
   });
@@ -32,6 +32,17 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+function scroll_to_top(event) {
+  event.preventDefault();
+  px;
+}
+function top_scroll() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    document.getElementById("topButton").style.display = "block";
+  } else {
+    document.getElementById("topButton").style.display = "none";
+  }
+}
 function format_time(time) {
   //takes in hours/second/minutes as 1- or 2-digit number and converts it to a 2-digit number
   return time < 10 ? "0" + time : time;
