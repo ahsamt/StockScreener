@@ -69,21 +69,28 @@ h3 {
   width: 500px;
 }
 
-.closing_price,
+.closing_price {
+  color: #325c84;
+  font-weight: 700;
+}
 .message {
   color: #cc0000;
 }
-.price_change {
-  color: orange;
+.price_change_green {
+  color: green;
 }
 
+.price_change_red {
+  color: #cc0000;
+}
 .watched_item {
   margin-bottom: 20px;
   animation-name: hide;
-  animation-duration: 1s;
+  animation-duration: 2s;
   animation-fill-mode: forwards;
   animation-play-state: paused;
 }
+
 .edit_content {
   text-align: left;
   margin: 0;
@@ -139,15 +146,16 @@ h3 {
     line-height: 100%;
     margin-bottom: 20px;
   }
-  75% {
+  50% {
     opacity: 0;
-    height: 100%;
+    height: 50%;
     line-height: 100%;
     margin-bottom: 20px;
   }
+
   100% {
     opacity: 0;
-    height: 0px;
+    height: 0;
     line-height: 0px;
     padding: 0px;
     margin-bottom: 0px;

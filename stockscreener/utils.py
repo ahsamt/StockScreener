@@ -40,9 +40,6 @@ def prep_graph_data(stock):
     norm = close_spec.div(close_spec.iloc[0]).mul(100)
     norm = norm.reset_index()
     close_spec = close_spec.reset_index()
-    # close_6months["buy_point"] = (close_6months["moving_avg_20"].round() == close_6months["moving_avg_50"].round())
-    # close_6months["inc_20"] = close_6months["moving_avg_20"].diff()>0
-    # close_6months["inc_50"] = close_6months["moving_avg_50"].diff()>0
     close_spec.to_csv("close.csv")
 
     return(close_spec, norm)
@@ -54,9 +51,11 @@ def get_change_info(data, stock):
     perc_dif = round(price_dif/previous_price*100, 2) 
     if price_dif > 0:
         sign = "+"
+        color = "green"
     else:
         sign = ""
-    change = (f"{sign}${round(price_dif,2)}  ({sign}{perc_dif}%)")
+        color = "red"
+    change = (f"{sign}${round(price_dif,2)}  ({sign}{perc_dif}%)", color)
     return (round(closing_price,2), change)   
 
 def make_graph_1(data, stock, height, width):
@@ -69,15 +68,7 @@ def make_graph_1(data, stock, height, width):
             "rangeselector": {
                 "buttons": buttons
             }}) 
-                
-    # fig.add_trace(go.Scatter(
-    # x=[pd.to_datetime("2021-07-09")],
-    # y=["145.11350021362300"],
-    # mode="markers+text",
-    # name="Point to Buy",
-    # text=["Point to buy"],
-    # textposition="bottom center"
-    # ))
+    
                 
     graph = fig.to_html(full_html=False, default_height=height, default_width=width)
     return graph
@@ -86,7 +77,7 @@ def make_graph_2(data, stock, height, width):
     fig = go.Figure()
     fig.add_trace(go.Scatter(name=stock, x=data["Date"], y=data[stock]))
     fig.add_trace(go.Scatter(name="S&P 500", x=data["Date"], y=data["^GSPC"]))
-    fig.update_layout(title = f"{stock} trading vs S&P 500 trading over the past year", template="seaborn", legend = {"orientation": "h","xanchor":"left"},
+    fig.update_layout(title = f"{stock} trading vs S&P 500 trading over the past year - normalised values", template="seaborn", legend = {"orientation": "h","xanchor":"left"},
                 xaxis = {
                     "rangeselector": {
                         "buttons": buttons }}) 
