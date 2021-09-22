@@ -73,8 +73,12 @@ h3 {
   color: #325c84;
   font-weight: 700;
 }
-.message {
+.message,
+#search_error_message {
   color: #cc0000;
+}
+#search_error_message {
+  text-align: center;
 }
 .price_change_green {
   color: green;

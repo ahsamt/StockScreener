@@ -21,7 +21,7 @@ import plotly.graph_objects as go
 import pandas as pd
 import yfinance as yf
 
-from .utils import get_change_info, make_graph_1, make_graph_2, prep_graph_data
+from .utils import get_change_info, make_graph_1, make_graph_2, prep_graph_data, get_SP_500_dict
 
 class StockForm(forms.Form):
     stock = forms.CharField(label = "Stock name", max_length=5)
@@ -29,40 +29,47 @@ class StockForm(forms.Form):
 def index(request):
     user = request.user
     if request.method == "GET":
-        stockForm = StockForm()     
-        return render (request, "stockscreener/index.html", {"stockForm": stockForm})
+        
+        return render (request, "stockscreener/index.html", {"stockForm": StockForm()})
     if request.method == "POST":
         if 'stock' in request.POST:
             stockForm = StockForm(request.POST) 
             if stockForm.is_valid():
                 stock = stockForm.cleaned_data['stock'].upper()
-                
-                data1, data2 = prep_graph_data(stock) 
-                closing_price, change = get_change_info(data1, stock)
-                graph1 = make_graph_1(data1, stock, 470, 630)
-                graph2 = make_graph_2(data2, stock, 470, 630)
+                dictSP500 = get_SP_500_dict()
+                if stock not in dictSP500.values():
+                    message = "Sorry, this ticker does not appear to be in S&P 500"
+                    return render (request, "stockscreener/index.html", {"message":message, "stockForm": StockForm})
+                    
+                else:
 
-                watchlisted = False
-                stockID = None
+                    data1, data2 = prep_graph_data(stock) 
+                    closing_price, change = get_change_info(data1, stock)
+                    graph1 = make_graph_1(data1, stock, 470, 630)
+                    graph2 = make_graph_2(data2, stock, 470, 630)
 
-                if user.is_authenticated:
-                    searchObj = SavedSearch.objects.filter(user = request.user, stock = stock)
-                    if len(searchObj):                      
-                        watchlisted = True
-                        stockID =  searchObj[0].id
+                    watchlisted = False
+                    stockID = None
 
-            context = {
-                "stockForm": stockForm, 
-                "stock":stock,
-                "stockID":stockID,
-                "closing_price":closing_price,
-                "change": change,
-                "watchlisted":watchlisted, 
-                "graph1":graph1, 
-                "graph2":graph2
-                }
+                    if user.is_authenticated:
+                        searchObj = SavedSearch.objects.filter(user = request.user, stock = stock)
+                        if len(searchObj):                      
+                            watchlisted = True
+                            stockID =  searchObj[0].id
+
+                    context = {
+                        "stockForm": stockForm, 
+                        "stock":stock,
+                        "stockID":stockID,
+                        "closing_price":closing_price,
+                        "change": change,
+                        "watchlisted":watchlisted, 
+                        "graph1":graph1, 
+                        "graph2":graph2
+                        }
                    
-        return render(request, "stockscreener/index.html", context)
+                    return render(request, "stockscreener/index.html", context)
+
 def login_view(request):
     if request.method == "POST":
         # Attempt to sign user in
