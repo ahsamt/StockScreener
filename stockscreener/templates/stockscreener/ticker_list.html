@@ -1,5 +1,13 @@
 {% extends "stockscreener/layout.html" %} {% load static %}{% block body %}
 <h2 class="mb-3">S&P 500 ticker list</h2>
-{% for key, value in sp500 %}
-<div>{{ key }}: {{ value }}</div>
+
+{% for key, value in sp500abc %}
+<a href="#{{ key }}">{{ key }}</a>
+{% endfor %} {% for k, v in sp500abc %}
+<div id="{{ k }}">
+  <h3>{{ k }}</h3>
+  {% for item in v %}
+  <div>{{ item.0 }}: {{ item.1 }}</div>
+  {% endfor %}
+</div>
 {% endfor %} {% endblock %}

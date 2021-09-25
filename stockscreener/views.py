@@ -20,11 +20,12 @@ import plotly.graph_objects as go
 
 import pandas as pd
 import yfinance as yf
+import string
 
 from .utils import get_change_info, make_graph_1, make_graph_2, prep_graph_data, get_SP_500_dict
 
 sp500 = get_SP_500_dict()
-print(sp500)
+
 
 
 class StockForm(forms.Form):
@@ -75,7 +76,15 @@ def index(request):
                     return render(request, "stockscreener/index.html", context)
 
 def ticker_list(request):
-    return render(request, "stockscreener/ticker_list.html", {"sp500":sorted(sp500.items())} )
+    abc_tickers = {}
+    abc = string.ascii_uppercase
+    for letter in abc:
+        abc_tickers[letter]=[]
+        for key, value in sorted(sp500.items()):
+            if key.startswith(letter):
+                abc_tickers[letter].append([key, value])
+        abc_tickers[letter] = sorted(abc_tickers[letter])
+    return render(request, "stockscreener/ticker_list.html", {"sp500abc":sorted(abc_tickers.items())} )
 
 def login_view(request):
     if request.method == "POST":
