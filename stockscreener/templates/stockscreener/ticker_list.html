@@ -1,0 +1,5 @@
+{% extends "stockscreener/layout.html" %} {% load static %}{% block body %}
+<h2 class="mb-3">S&P 500 ticker list</h2>
+{% for key, value in sp500 %}
+<div>{{ key }}: {{ value }}</div>
+{% endfor %} {% endblock %}

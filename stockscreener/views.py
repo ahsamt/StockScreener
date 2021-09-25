@@ -23,26 +23,30 @@ import yfinance as yf
 
 from .utils import get_change_info, make_graph_1, make_graph_2, prep_graph_data, get_SP_500_dict
 
+sp500 = get_SP_500_dict()
+print(sp500)
+
+
 class StockForm(forms.Form):
     stock = forms.CharField(label = "Stock name", max_length=5)
-
+   
+    
 def index(request):
     user = request.user
-    if request.method == "GET":
-        
+    if request.method == "GET": 
         return render (request, "stockscreener/index.html", {"stockForm": StockForm()})
+   
     if request.method == "POST":
         if 'stock' in request.POST:
             stockForm = StockForm(request.POST) 
             if stockForm.is_valid():
                 stock = stockForm.cleaned_data['stock'].upper()
-                dictSP500 = get_SP_500_dict()
-                if stock not in dictSP500.values():
+                
+                if stock not in sp500:
                     message = "Sorry, this ticker does not appear to be in S&P 500"
                     return render (request, "stockscreener/index.html", {"message":message, "stockForm": StockForm})
                     
                 else:
-
                     data1, data2 = prep_graph_data(stock) 
                     closing_price, change = get_change_info(data1, stock)
                     graph1 = make_graph_1(data1, stock, 470, 630)
@@ -69,6 +73,9 @@ def index(request):
                         }
                    
                     return render(request, "stockscreener/index.html", context)
+
+def ticker_list(request):
+    return render(request, "stockscreener/ticker_list.html", {"sp500":sorted(sp500.items())} )
 
 def login_view(request):
     if request.method == "POST":

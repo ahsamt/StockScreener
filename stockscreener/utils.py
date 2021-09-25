@@ -14,7 +14,7 @@ buttons = [{"count": 5, "label": "5D", "step": "day","stepmode": "backward"},
 def get_SP_500_dict():
     table=pd.read_html('https://en.wikipedia.org/wiki/List_of_S%26P_500_companies')
     df = table[0]
-    dictSP500 = pd.Series(df.Symbol.values,index=df.Security).to_dict()
+    dictSP500 = pd.Series(df.Security.values,index=df.Symbol).to_dict()
     return dictSP500
 
 def moving_average(series, window_size):
