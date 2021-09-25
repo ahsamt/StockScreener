@@ -30,12 +30,19 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".edit_notes_button").forEach((edit_button) => {
     edit_button.addEventListener("click", (event) => update_notes(event));
   });
+  document.querySelector("#A").style.display = "block";
+  document.querySelectorAll(".abc").forEach((letter) => {
+    letter.addEventListener("click", (event) => {
+      event.preventDefault();
+      document.querySelectorAll(".abc_tickers").forEach((section) => {
+        section.style.display = "none";
+      });
+      document.querySelector(`#${letter.dataset.letter}`).style.display =
+        "block";
+    });
+  });
 });
 
-function scroll_to_top(event) {
-  event.preventDefault();
-  px;
-}
 function top_scroll() {
   if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
     document.getElementById("topButton").style.display = "block";

@@ -111,7 +111,9 @@ h3 {
   background-color: white;
   z-index: 99;
 }
-
+.abc_tickers {
+  display: none;
+}
 #clock {
   position: fixed;
   bottom: 0;
