@@ -86,6 +86,8 @@ def ticker_list(request):
         abc_tickers[letter] = sorted(abc_tickers[letter])
     return render(request, "stockscreener/ticker_list.html", {"sp500abc":sorted(abc_tickers.items())} )
 
+def about(request):
+    return render(request, "stockscreener/about.html")
 def login_view(request):
     if request.method == "POST":
         # Attempt to sign user in
