@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   setInterval(show_clock, 1000);
   window.addEventListener("scroll", () => top_scroll());
+
   document.querySelectorAll(".watchlist").forEach((watch_button) => {
     watch_button.addEventListener("click", (event) => update_watchlist(event));
   });
@@ -30,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".edit_notes_button").forEach((edit_button) => {
     edit_button.addEventListener("click", (event) => update_notes(event));
   });
-  document.querySelector("#A").style.display = "block";
+
   document.querySelectorAll(".abc").forEach((letter) => {
     letter.addEventListener("click", (event) => {
       event.preventDefault();
@@ -80,7 +81,7 @@ function update_notes(event) {
     if (response.ok) {
       let time = document.querySelector("#clock").innerHTML;
       document.querySelector(
-        "#message_notes"
+        `#messageNotes${stockID}`
       ).innerHTML = `Notes saved at ${time}`;
     }
   });

@@ -5,7 +5,7 @@
     rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
   --red-font-color: #cc0000;
   --blue-font-color: #325c84;
-  --green-font-color: #025430;
+  --green-font-color: #40bc1e;
   --red-hover-color: #99103d;
 }
 
@@ -159,7 +159,9 @@ h3 {
   box-shadow: var(--custom-shadow);
   border-radius: 4px;
 }
-
+#A {
+  display: block;
+}
 @keyframes hide {
   0% {
     opacity: 1;
