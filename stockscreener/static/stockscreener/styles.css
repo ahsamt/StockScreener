@@ -115,14 +115,7 @@ h3 {
   display: none;
 }
 #clock {
-  position: fixed;
-  bottom: 0;
-  margin: 5px;
-  right: 0;
-  color: white;
-  font-weight: bold;
-  font-size: 16px;
-  background-color: #325c84;
+  display: none;
 }
 
 #searchButton {
@@ -133,14 +126,14 @@ h3 {
   display: none;
   position: fixed;
   z-index: 99;
-  bottom: 45px;
+  bottom: 5px;
   right: 5px;
-  padding: 5px;
+  padding: 5px 10px;
   text-decoration: none;
   color: #325c84;
   background-color: white;
   font-weight: bold;
-  font-size: 18px;
+  font-size: 25px;
   box-shadow: var(--custom-shadow);
   border-radius: 4px;
 }
