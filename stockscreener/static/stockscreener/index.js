@@ -1,66 +1,56 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // get the clock working
   setInterval(show_clock, 1000);
+
+  // check on scroll if "back to top" button should be displayed
   window.addEventListener("scroll", () => top_scroll());
 
+  // update watchlist when the relevant button is clicked on the index page
   document.querySelectorAll(".watchlist").forEach((watch_button) => {
     watch_button.addEventListener("click", (event) => update_watchlist(event));
   });
+
+  // remove stock from watchlist when the relevant button is clicked on the watchlist page
   document
     .querySelectorAll(".remove_from_watchlist")
     .forEach((remove_button) => {
       remove_button.addEventListener("click", (event) => {
-        let stockID = event.target.dataset.stock_id;
-        let confirm = prompt(
-          `Are you sure you want to remove this stock from your watchlist? This will permanently delete any notes you have saved. (y/n)`
-        );
-        if (confirm === "y") {
-          update_watchlist(event);
-          document.querySelector(
-            `#watchedItem${stockID}`
-          ).style.animationPlayState = "running";
-          document.querySelector(`#stock_link${stockID}`).style.display =
-            "none";
-        } else if (confirm === "n") {
-          alert("No problem, we'll keep it where it is!");
-        } else {
-          alert("Sorry, we didn't get it! Please try again.");
-        }
+        remove_from_watchlist(event);
       });
     });
 
-  document.querySelectorAll(".edit_notes_button").forEach((edit_button) => {
-    edit_button.addEventListener("click", (event) => update_notes(event));
+  // save notes when the relevant button is clicked on the watchlist page
+  document.querySelectorAll(".save_notes_button").forEach((save_button) => {
+    save_button.addEventListener("click", (event) => update_notes(event));
   });
 
+  // display the relevant stocks when a letter button is clicked on the ticker list page
   document.querySelectorAll(".abc").forEach((letter) => {
     letter.addEventListener("click", (event) => {
-      event.preventDefault();
-      document.querySelectorAll(".abc_tickers").forEach((section) => {
-        section.style.display = "none";
-      });
-      document.querySelector(`#${letter.dataset.letter}`).style.display =
-        "block";
+      display_stock_list(event);
     });
   });
 });
 
 function top_scroll() {
+  // insert "back to top" button when user scrolls down the page
   if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
     document.getElementById("topButton").style.display = "block";
   } else {
     document.getElementById("topButton").style.display = "none";
   }
 }
+
 function format_time(time) {
-  //takes in hours/second/minutes as 1- or 2-digit number and converts it to a 2-digit number
+  // formats hours/second/minutes as a 2-digit number
   return time < 10 ? "0" + time : time;
 }
 
 function get_time() {
+  // get user's current time to start the clock
   let now = new Date();
   let hours = format_time(now.getHours());
   let minutes = format_time(now.getMinutes());
-
   return `${hours}:${minutes}`;
 }
 
@@ -69,6 +59,7 @@ function show_clock() {
 }
 
 function update_notes(event) {
+  // use internal API to update user's notes for specific stock
   event.preventDefault();
   let stockID = event.target.dataset.stock_id;
   let updated_notes = document.querySelector(`#editContent${stockID}`).value;
@@ -125,4 +116,29 @@ function update_watchlist(event) {
       }
     });
   }
+}
+
+function remove_from_watchlist(event) {
+  let stockID = event.target.dataset.stock_id;
+  let confirm = prompt(
+    `Are you sure you want to remove this stock from your watchlist? This will permanently delete any notes you have saved. (y/n)`
+  );
+  if (confirm === "y") {
+    update_watchlist(event);
+    document.querySelector(`#watchedItem${stockID}`).style.animationPlayState =
+      "running";
+    document.querySelector(`#stock_link${stockID}`).style.display = "none";
+  } else if (confirm === "n") {
+    alert("No problem, we'll keep it where it is!");
+  } else {
+    alert("Sorry, we didn't get it! Please try again.");
+  }
+}
+
+function display_stock_list(event) {
+  event.preventDefault();
+  document.querySelectorAll(".abc_tickers").forEach((section) => {
+    section.style.display = "none";
+  });
+  document.querySelector(`#${letter.dataset.letter}`).style.display = "block";
 }
