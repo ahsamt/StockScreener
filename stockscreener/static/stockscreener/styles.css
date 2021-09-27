@@ -5,6 +5,7 @@
     rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
   --red-font-color: #cc0000;
   --blue-font-color: #325c84;
+  --green-font-color: #025430;
   --red-hover-color: #99103d;
 }
 
@@ -85,7 +86,7 @@ h3 {
   text-align: center;
 }
 .price_change_green {
-  color: #275b5a;
+  color: var(--green-font-color);
 }
 
 .watched_item {
@@ -110,6 +111,21 @@ h3 {
   color: var(--blue-font-color);
   background-color: white;
   z-index: 99;
+}
+
+.abc {
+  width: 12px;
+  font-weight: 800;
+  font-size: 18px;
+  padding: 4px;
+  color: var(--red-hover-color);
+  transition: ease-in-out 200ms;
+  text-decoration: none;
+}
+
+.abc:hover {
+  color: var(--green-font-color);
+  text-decoration: underline;
 }
 .abc_tickers {
   display: none;
