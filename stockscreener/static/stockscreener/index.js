@@ -140,5 +140,6 @@ function display_stock_list(event) {
   document.querySelectorAll(".abc_tickers").forEach((section) => {
     section.style.display = "none";
   });
-  document.querySelector(`#${letter.dataset.letter}`).style.display = "block";
+  document.querySelector(`#${event.target.dataset.letter}`).style.display =
+    "block";
 }
