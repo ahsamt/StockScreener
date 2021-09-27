@@ -162,6 +162,11 @@ h3 {
 #A {
   display: block;
 }
+
+#username {
+  display: none;
+}
+
 @keyframes hide {
   0% {
     opacity: 1;
