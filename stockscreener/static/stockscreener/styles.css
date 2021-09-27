@@ -13,7 +13,9 @@ body {
   background: var(--background-color);
   font-family: "Open Sans", sans-serif;
   font-size: 15px;
+  padding-left: 0;
 }
+
 .navbar {
   background-color: var(--blue-font-color);
 }
@@ -124,7 +126,7 @@ h3 {
 }
 
 .abc:hover {
-  color: var(--green-font-color);
+  color: var(--red-font-color);
   text-decoration: underline;
 }
 .abc_tickers {
@@ -166,7 +168,18 @@ h3 {
 #username {
   display: none;
 }
+@media (max-width: 991px) {
+  body {
+    font-size: 13px;
+  }
 
+  .index-card {
+    width: 300px;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+  }
+}
 @keyframes hide {
   0% {
     opacity: 1;

@@ -54,15 +54,18 @@
   </div>
 </nav>
 
-<h2 class="mb-3">S&P 500 ticker list</h2>
+<div class="container">
+  <h2 class="mb-3">S&P 500 ticker list</h2>
 
-{% for key, value in sp500abc %}
-<a href="#" class="abc" data-letter="{{ key }}">{{ key }}</a>
-{% endfor %} {% for key, value in sp500abc %}
-<div class="abc_tickers" id="{{ key }}">
-  <h3>{{ k }}</h3>
-  {% for item in value %}
-  <div><span class="tickers">{{ item.0 }}</span>: {{ item.1 }}</div>
+  {% for key, value in sp500abc %}
+  <a href="#" class="abc" data-letter="{{ key }}">{{ key }}</a>
+  {% endfor %} {% for key, value in sp500abc %}
+  <div class="abc_tickers" id="{{ key }}">
+    <h3>{{ k }}</h3>
+    {% for item in value %}
+    <div><span class="tickers">{{ item.0 }}</span>: {{ item.1 }}</div>
+    {% endfor %}
+  </div>
   {% endfor %}
 </div>
-{% endfor %} {% endblock %}
+{% endblock %}

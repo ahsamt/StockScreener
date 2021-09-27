@@ -55,68 +55,71 @@
     </div>
   </div>
 </nav>
-{% if not stock %}
 
-<div class="welcome">
-  <h1>Welcome to StockScreener!</h1>
-  <p>Please enter the ticker below:</p>
-</div>
+<div class="container">
+  {% if not stock %}
+
+  <div class="welcome">
+    <h1>Welcome to StockScreener!</h1>
+    <p>Please enter the ticker below:</p>
+  </div>
+
+  {% include "stockscreener/search_form.html" with stock=stock message=message%}
+
+  <!--prettier-ignore-->
+  {% else %} 
 
 {% include "stockscreener/search_form.html" with stock=stock message=message%}
 
-<!--prettier-ignore-->
-{% else %} 
-
-{% include "stockscreener/search_form.html" with stock=stock message=message%}
-
-<div class="index-card card mb-4">
-  <div class="card-body">
-    <!--prettier-ignore-->
-    {% include "stockscreener/stock_details.html" with stock=stock change=change closing_price=closing_price %} 
+  <div class="index-card card mb-4">
+    <div class="card-body">
+      <!--prettier-ignore-->
+      {% include "stockscreener/stock_details.html" with stock=stock change=change closing_price=closing_price %} 
     
     {% if user.is_authenticated %} 
     
     {% if watchlisted %}
 
-    <div class="card-link">
+      <div class="card-link">
+        <a
+          href="#"
+          class="watchlist"
+          data-stock_name="{{ stock }}"
+          data-stock_id="{{ stockID }}"
+        >
+          Remove {{ stock }} from watchlist
+        </a>
+      </div>
+
+      {% else %}
+
       <a
         href="#"
         class="watchlist"
         data-stock_name="{{ stock }}"
         data-stock_id="{{ stockID }}"
       >
-        Remove {{ stock }} from watchlist
-      </a>
+        Add {{ stock }} to watchlist</a
+      >
+
+      {% endif %} {% else %}
+
+      <p>
+        Please
+        <a href="{% url 'login' %}">log In</a>
+        or <a href="{% url 'register' %}">register</a> to add this stock to your
+        watchlist
+      </p>
+
+      {% endif %}
     </div>
-
-    {% else %}
-
-    <a
-      href="#"
-      class="watchlist"
-      data-stock_name="{{ stock }}"
-      data-stock_id="{{ stockID }}"
-    >
-      Add {{ stock }} to watchlist</a
-    >
-
-    {% endif %} {% else %}
-
-    <p>
-      Please
-      <a href="{% url 'login' %}">log In</a>
-      or <a href="{% url 'register' %}">register</a> to add this stock to your
-      watchlist
-    </p>
-
-    {% endif %}
   </div>
-</div>
 
-<!--prettier-ignore-->
-{% include "stockscreener/graphs.html" with graph1=graph1 graph2=graph2 %}
+  <!--prettier-ignore-->
+  {% include "stockscreener/graphs.html" with graph1=graph1 graph2=graph2 %}
 {% endif %}
-<p class="message" id="message_index"></p>
+  <p class="message" id="message_index"></p>
 
-<br />
+  <br />
+</div>
 {% endblock %}

@@ -50,8 +50,8 @@ def index(request):
                 else:
                     data1, data2 = prep_graph_data(stock) 
                     closing_price, change = get_change_info(data1, stock)
-                    graph1 = make_graph_1(data1, stock, 470, 630)
-                    graph2 = make_graph_2(data2, stock, 470, 630)
+                    graph1 = make_graph_1(data1, stock, 480, 600)
+                    graph2 = make_graph_2(data2, stock, 480, 600)
 
                     watchlisted = False
                     stockID = None

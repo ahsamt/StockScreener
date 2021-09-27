@@ -56,75 +56,81 @@
   </div>
 </nav>
 
-<h2 class="mb-3">{{ user }}'s watchlist</h2>
-<!-- prettier-ignore -->
-{% if user.is_authenticated %}
+<div class="container">
+  <h2 class="mb-3">{{ user }}'s watchlist</h2>
+  <!-- prettier-ignore -->
+  {% if user.is_authenticated %}
 
 {% if watched_stocks %}
 
-<h3 class="mb-3">Your watched stocks:</h3>
-<div class="mb-3">
+  <h3 class="mb-3">Your watched stocks:</h3>
+  <div class="mb-3">
+    {% for item in watched_stocks %}
+    <a
+      href="#watchedItem{{ item.stockID }}"
+      class="stock_link"
+      id="stock_link{{ item.stockID }}"
+    >
+      {{ item.stock }}
+    </a>
+    {% endfor %}
+  </div>
+
   {% for item in watched_stocks %}
-  <a
-    href="#watchedItem{{ item.stockID }}"
-    class="stock_link"
-    id="stock_link{{ item.stockID }}"
-  >
-    {{ item.stock }}
-  </a>
-  {% endfor %}
-</div>
 
-{% for item in watched_stocks %}
-
-<div class="watched_item" id="watchedItem{{ item.stockID }}">
-  <div class="row">
-    <div class="col">
-      <div class="card mb-4">
-        <div class="card-body">
-          <!-- prettier-ignore -->
-          {% include "stockscreener/stock_details.html" with stock=item.stock change=item.change closing_price=item.closing_price %}
+  <div class="watched_item" id="watchedItem{{ item.stockID }}">
+    <div class="row">
+      <div class="col">
+        <div class="card mb-4">
+          <div class="card-body">
+            <!-- prettier-ignore -->
+            {% include "stockscreener/stock_details.html" with stock=item.stock change=item.change closing_price=item.closing_price %}
+          </div>
         </div>
+
+        <h3>Your notes for {{ item.stock }}:</h3>
+        <form
+          class="edit_notes"
+          id="editNotes{{ item.stockID }}"
+          data-stock_id="{{ item.stockID }}"
+        >
+          <div class="form-group">
+            <textarea
+              class="edit_content form-control"
+              id="editContent{{ item.stockID }}"
+              rows="12"
+            >
+            {{ item.notes }}
+          </textarea
+            >
+            <button
+              class="edit_notes_button"
+              type="submit"
+              data-stock_id="{{ item.stockID }}"
+            >
+              Save notes
+            </button>
+          </div>
+        </form>
+
+        <button
+          class="remove_from_watchlist"
+          data-stock_id="{{ item.stockID }}"
+        >
+          Remove {{ item.stock }} from watchlist
+        </button>
+
+        <p class="message mt-2 mb-3" id="messageNotes{{ item.stockID }}"></p>
+      </div>
+      <div class="col">
+        <!-- prettier-ignore -->
+        {% include "stockscreener/graphs.html" with graph1=item.graph1 graph2=item.graph2 %}
       </div>
 
-      <h3>Your notes for {{ item.stock }}:</h3>
-      <form
-        class="edit_notes"
-        id="editNotes{{ item.stockID }}"
-        data-stock_id="{{ item.stockID }}"
-      >
-        <div class="form-group">
-          <textarea
-            class="edit_content form-control"
-            id="editContent{{ item.stockID }}"
-            rows="12"
-          >
-            {{ item.notes }}
-          </textarea>
-          <button
-            class="edit_notes_button"
-            type="submit"
-            data-stock_id="{{ item.stockID }}"
-          >
-            Save notes
-          </button>
-        </div>
-      </form>
-
-      <button class="remove_from_watchlist" data-stock_id="{{ item.stockID }}">
-        Remove {{ item.stock }} from watchlist
-      </button>
-
-      <p class="message mt-2 mb-3" id="messageNotes{{ item.stockID }}"></p>
+      <hr />
     </div>
-    <div class="col">
-      <!-- prettier-ignore -->
-      {% include "stockscreener/graphs.html" with graph1=item.graph1 graph2=item.graph2 %}
-    </div>
-
-    <hr />
   </div>
+  {% endfor %} {% else %}
+  <p>You do not have any stocks in your watchlist</p>
+  {% endif %} {% endif %} {% endblock %}
 </div>
-{% endfor %} {% else %}
-<p>You do not have any stocks in your watchlist</p>
-{% endif %} {% endif %} {% endblock %}

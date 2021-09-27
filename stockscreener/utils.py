@@ -31,8 +31,8 @@ def prep_graph_data(stock):
     start_date = end_date + relativedelta(months = -num_months)
     start_date_internal = start_date + relativedelta(months= -3) 
     start_date_datetime = datetime.combine(start_date, datetime.min.time()) 
-    stocks = yf.download(ticker, start = start_date_internal, end = end_date)
-    stocks.to_csv("stocks.csv")
+    # stocks = yf.download(ticker, start = start_date_internal, end = end_date)
+    # stocks.to_csv("stocks.csv")
     stocks = pd.read_csv("stocks.csv", header = [0, 1], index_col = [0], parse_dates = [0])
     stocks.columns = stocks.columns.to_flat_index()
     stocks.columns = pd.MultiIndex.from_tuples(stocks.columns)
@@ -74,10 +74,12 @@ def make_graph_1(data, stock, height, width):
         xaxis = {
             "rangeselector": {
                 "buttons": buttons
-            }}) 
+            }}, width = width, height=height 
+        )
+    
     
                 
-    graph = fig.to_html(full_html=False, default_height=height, default_width=width)
+    graph = fig.to_html(full_html=False)
     return graph
 
 def make_graph_2(data, stock, height, width):
@@ -87,7 +89,7 @@ def make_graph_2(data, stock, height, width):
     fig.update_layout(title = f"{stock} trading vs S&P 500 trading over the past year - normalised values", template="seaborn", legend = {"orientation": "h","xanchor":"left"},
                 xaxis = {
                     "rangeselector": {
-                        "buttons": buttons }}) 
+                        "buttons": buttons }}, width=width, height=height) 
 
-    graph = fig.to_html(full_html=False, default_height=height, default_width=width)
+    graph = fig.to_html(full_html=False)
     return graph
