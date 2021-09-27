@@ -3,6 +3,9 @@
   --custom-shadow: rgba(164, 164, 167, 0.25) 0px 50px 100px -20px,
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
     rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+  --red-font-color: #cc0000;
+  --blue-font-color: #325c84;
+  --red-hover-color: #99103d;
 }
 
 body {
@@ -11,20 +14,20 @@ body {
   font-size: 15px;
 }
 .navbar {
-  background-color: #325c84;
+  background-color: var(--blue-font-color);
 }
 button {
   transition: ease-in-out 200ms;
   border-radius: 4px;
   box-shadow: var(--custom-shadow);
-  background-color: #325c84;
+  background-color: var(--blue-font-color);
   margin: 10px 0 5px 0;
   padding: 3px 11px;
   color: white;
 }
 
 button:hover {
-  background-color: #99103d;
+  background-color: var(--red-hover-color);
   color: white;
 }
 
@@ -51,7 +54,7 @@ h3 {
   border-radius: 4px;
   box-shadow: var(--custom-shadow);
   margin: 10px 0 10px 0;
-  color: #325c84;
+  color: var(--blue-font-color);
   text-decoration: none;
   padding: 4px 8px;
   background-color: white;
@@ -70,23 +73,21 @@ h3 {
 }
 
 .closing_price {
-  color: #325c84;
+  color: var(--blue-font-color);
   font-weight: 700;
 }
 .message,
+.price_change_red,
 #search_error_message {
-  color: #cc0000;
+  color: var(--red-font-color);
 }
 #search_error_message {
   text-align: center;
 }
 .price_change_green {
-  color: green;
+  color: #275b5a;
 }
 
-.price_change_red {
-  color: #cc0000;
-}
 .watched_item {
   margin-bottom: 20px;
   animation-name: hide;
@@ -100,19 +101,24 @@ h3 {
   margin: 0;
 }
 
-.stock_link,
-#clock {
+.stock_link {
   border-radius: 4px;
   box-shadow: var(--custom-shadow);
   margin: 0px 20px 0px 0px;
   text-decoration: none;
   padding: 6px 10px;
-  color: #325c84;
+  color: var(--blue-font-color);
   background-color: white;
   z-index: 99;
 }
 .abc_tickers {
   display: none;
+  line-height: 2;
+}
+
+.tickers {
+  font-weight: 800;
+  color: var(--red-hover-color);
 }
 #clock {
   display: none;
@@ -130,7 +136,7 @@ h3 {
   right: 5px;
   padding: 5px 10px;
   text-decoration: none;
-  color: #325c84;
+  color: var(--blue-font-color);
   background-color: white;
   font-weight: bold;
   font-size: 25px;
