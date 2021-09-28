@@ -95,7 +95,7 @@ def make_graph_1(data, stock, height, width):
         xaxis = {
             "rangeselector": {
                 "buttons": buttons
-            }}, width = width, height=height 
+            }}, width = width, height=height,
         )     
     graph = fig.to_html(full_html=False)
     return graph

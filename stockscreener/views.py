@@ -26,14 +26,11 @@ from .utils import get_change_info, make_graph_1, make_graph_2, prep_graph_data,
 
 sp500 = get_SP_500_dict()
 
-
-
 class StockForm(forms.Form):
-    stock = forms.CharField(label = "Stock name", max_length=5)
-   
+    stock = forms.CharField(label = "Stock name", max_length=5) 
     
 def index(request):
-    user = request.user
+
     if request.method == "GET": 
         return render (request, "stockscreener/index.html", {"stockForm": StockForm()})
    
@@ -45,7 +42,11 @@ def index(request):
                 
                 if stock not in sp500:
                     message = "Sorry, this ticker does not appear to be in S&P 500"
-                    return render (request, "stockscreener/index.html", {"message":message, "stockForm": StockForm})
+                    context = {
+                        "message":message, 
+                        "stockForm": StockForm
+                        }
+                    return render (request, "stockscreener/index.html", context)
                     
                 else:
                     data1, data2 = prep_graph_data(stock)
@@ -53,16 +54,14 @@ def index(request):
                     closing_price, change = get_change_info(data1, stock)
                     graph1 = make_graph_1(data1, stock, 470, 630)
                     graph2 = make_graph_2(data2, stock, 470, 630)
-
                     watchlisted = False
                     stockID = None
 
-                    if user.is_authenticated:
+                    if request.user.is_authenticated:
                         searchObj = SavedSearch.objects.filter(user = request.user, stock = stock)
                         if len(searchObj):                      
                             watchlisted = True
                             stockID =  searchObj[0].id
-                            
 
                     context = {
                         "stockForm": stockForm, 
@@ -79,18 +78,20 @@ def index(request):
                     return render(request, "stockscreener/index.html", context)
 
 def ticker_list(request):
-    abc_tickers = {}
+    abcTickers = {}
     abc = string.ascii_uppercase
     for letter in abc:
-        abc_tickers[letter]=[]
+        abcTickers[letter]=[]
         for key, value in sorted(sp500.items()):
             if key.startswith(letter):
-                abc_tickers[letter].append([key, value])
-        abc_tickers[letter] = sorted(abc_tickers[letter])
-    return render(request, "stockscreener/ticker_list.html", {"sp500abc":sorted(abc_tickers.items())} )
+                abcTickers[letter].append([key, value])
+        abcTickers[letter] = sorted(abcTickers[letter])
+        sp500abc = sorted(abcTickers.items())
+    return render(request, "stockscreener/ticker_list.html", {"sp500abc":sp500abc})
 
 def about(request):
     return render(request, "stockscreener/about.html")
+    
 def login_view(request):
     if request.method == "POST":
         # Attempt to sign user in
@@ -140,14 +141,15 @@ def register(request):
 @login_required
 def watchlist(request):
     if request.method == "GET":
+        
         if request.user.is_authenticated:
-            watched_stocks = []
-           
+
+            watched_stocks = [] 
             watchlist=SavedSearch.objects.filter(user=request.user)  
             watchlist=sorted(watchlist, key = lambda p: (p.date), reverse=True)
+
             for item in watchlist:   
-                stock = item.stock 
- 
+                stock = item.stock  
                 watchlist_temp = {} 
                 watchlist_temp["stock"] = stock
                 watchlist_temp["stockFull"] = item.stock_full
@@ -178,19 +180,15 @@ def saved_searches(request):
         return JsonResponse({
             "error": "Stock name is required."
         }, status=400)
-    
-    
-    # Create a saved search for the logged in user
-    
+     
+    # Create a saved search for the logged in user 
     savedSearch = SavedSearch(
             user = request.user,
             stock = stock,
             stock_full = sp500[stock], 
         )
     savedSearch.save()
-    search_id = savedSearch.id
-       
-
+    search_id = savedSearch.id    
     return JsonResponse({"message": "Search saved successfully", "id":search_id}, status=201)
 
 @csrf_exempt
