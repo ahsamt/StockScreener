@@ -48,7 +48,8 @@ def index(request):
                     return render (request, "stockscreener/index.html", {"message":message, "stockForm": StockForm})
                     
                 else:
-                    data1, data2 = prep_graph_data(stock) 
+                    data1, data2 = prep_graph_data(stock)
+                    stockFull = sp500[stock] 
                     closing_price, change = get_change_info(data1, stock)
                     graph1 = make_graph_1(data1, stock, 480, 600)
                     graph2 = make_graph_2(data2, stock, 480, 600)
@@ -61,10 +62,12 @@ def index(request):
                         if len(searchObj):                      
                             watchlisted = True
                             stockID =  searchObj[0].id
+                            
 
                     context = {
                         "stockForm": stockForm, 
                         "stock":stock,
+                        "stockFull":stockFull,
                         "stockID":stockID,
                         "closing_price":closing_price,
                         "change": change,
@@ -144,23 +147,19 @@ def watchlist(request):
             watchlist=sorted(watchlist, key = lambda p: (p.date), reverse=True)
             for item in watchlist:   
                 stock = item.stock 
-                
+ 
                 watchlist_temp = {} 
                 watchlist_temp["stock"] = stock
-                watchlist_temp["data1"], watchlist_temp["data2"] = prep_graph_data(stock)     
-                watchlist_temp["closing_price"], watchlist_temp["change"] = get_change_info(watchlist_temp["data1"], stock)
-        
-                watchlist_temp["graph1"] = make_graph_1(watchlist_temp["data1"], stock, 575, 840)              
-                
-                watchlist_temp["graph2"] = make_graph_2(watchlist_temp["data2"], stock, 575, 840)
-                
-                watchlist_temp["notes"] = item.notes 
-              
+                watchlist_temp["stockFull"] = item.stock_full
+                watchlist_temp["notes"] = item.notes  
                 watchlist_temp["stockID"]= item.id 
-
+                watchlist_temp["data1"], watchlist_temp["data2"] = prep_graph_data(stock)     
+                watchlist_temp["closing_price"], watchlist_temp["change"] = get_change_info(watchlist_temp["data1"], stock)       
+                watchlist_temp["graph1"] = make_graph_1(watchlist_temp["data1"], stock, 575, 840)              
+                watchlist_temp["graph2"] = make_graph_2(watchlist_temp["data2"], stock, 575, 840) 
+                
                 watched_stocks.append(watchlist_temp)    
-                
-                
+                       
         return render(request, "stockscreener/watchlist.html", {'watched_stocks':watched_stocks})
 
 @csrf_exempt
@@ -186,7 +185,7 @@ def saved_searches(request):
     savedSearch = SavedSearch(
             user = request.user,
             stock = stock,
-            
+            stock_full = sp500[stock], 
         )
     savedSearch.save()
     search_id = savedSearch.id

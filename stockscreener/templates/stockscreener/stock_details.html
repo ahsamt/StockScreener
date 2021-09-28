@@ -1,8 +1,9 @@
-<h5 class="card-title" id="stock_name">{{ stock }}</h5>
-<h6 class="card-subtitle mb-2 text-muted">
-  Last closing price:
+<h4 class="card-title" id="stock_name">{{ stock }} ({{ stockFull }})</h4>
+<h5 class="card-subtitle mb-2">
+  <span class="text-muted">Last closing price:</span>
+
   <span class="closing_price">${{ closing_price }}</span>
-</h6>
-<h6 class="card-subtitle mb-2 text-muted">
+</h5>
+<h5 class="card-subtitle mb-2">
   <span class="price_change_{{ change.1 }}">{{ change.0 }} </span>
-</h6>
+</h5>

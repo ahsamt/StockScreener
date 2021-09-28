@@ -7,6 +7,7 @@
   --blue-font-color: #325c84;
   --green-font-color: #40bc1e;
   --red-hover-color: #99103d;
+  --grey-font-color: #333333;
 }
 
 body {
@@ -16,9 +17,6 @@ body {
   padding-left: 0;
 }
 
-.navbar {
-  background-color: var(--blue-font-color);
-}
 button {
   transition: ease-in-out 200ms;
   border-radius: 4px;
@@ -40,79 +38,29 @@ h1 {
 }
 
 h2 {
-  font-size: 27px;
+  font-size: 26px;
   padding: 20px 0 5px 0;
-  text-transform: capitalize;
   font-weight: 550;
+  color: var(--blue-font-color);
 }
 
 h3 {
   font-size: 20px;
   padding: 5px 0 5px 0;
 }
-.welcome {
-  text-align: center;
-}
-.watchlist {
-  border-radius: 4px;
-  box-shadow: var(--custom-shadow);
-  margin: 10px 0 10px 0;
-  color: var(--blue-font-color);
-  text-decoration: none;
-  padding: 4px 8px;
-  background-color: white;
+
+h4 {
+  font-size: 18px;
+  padding-bottom: 5px;
 }
 
-.search-form {
-  display: block;
-  margin: auto;
-  text-align: center;
-}
-.index-card {
-  display: block;
-  margin: 0 auto;
-  text-align: center;
-  width: 500px;
+h5 {
+  font-size: 16px;
 }
 
-.closing_price {
-  color: var(--blue-font-color);
-  font-weight: 700;
-}
-.message,
-.price_change_red,
-#search_error_message {
-  color: var(--red-font-color);
-}
-#search_error_message {
-  text-align: center;
-}
-.price_change_green {
-  color: var(--green-font-color);
-}
-
-.watched_item {
-  margin-bottom: 20px;
-  animation-name: hide;
-  animation-duration: 2s;
-  animation-fill-mode: forwards;
-  animation-play-state: paused;
-}
-
-.edit_content {
-  text-align: left;
-  margin: 0;
-}
-
-.stock_link {
-  border-radius: 4px;
-  box-shadow: var(--custom-shadow);
-  margin: 0px 20px 0px 0px;
-  text-decoration: none;
-  padding: 6px 10px;
-  color: var(--blue-font-color);
-  background-color: white;
-  z-index: 99;
+input,
+textarea {
+  outline: none;
 }
 
 .abc {
@@ -129,15 +77,91 @@ h3 {
   color: var(--red-font-color);
   text-decoration: underline;
 }
+
 .abc_tickers {
   display: none;
   line-height: 2;
+}
+
+.closing_price {
+  color: var(--grey-font-color);
+  font-weight: 800;
+}
+
+.edit_content {
+  text-align: left;
+  margin: 0;
+}
+
+.index-card {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  width: 500px;
+}
+
+.navbar {
+  background-color: var(--blue-font-color);
+}
+
+.message,
+.price_change_red,
+#search_error_message {
+  color: var(--red-font-color);
+}
+
+.price_change_green {
+  color: var(--green-font-color);
+}
+
+.search-form {
+  display: block;
+  margin: auto;
+  text-align: center;
+}
+
+.stock_link {
+  border-radius: 4px;
+  box-shadow: var(--custom-shadow);
+  margin: 0px 20px 0px 0px;
+  text-decoration: none;
+  padding: 6px 10px;
+  color: var(--blue-font-color);
+  background-color: white;
+  z-index: 99;
 }
 
 .tickers {
   font-weight: 800;
   color: var(--red-hover-color);
 }
+
+.watched_item {
+  margin-bottom: 20px;
+  animation-name: hide;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  animation-play-state: paused;
+}
+
+.watchlist {
+  border-radius: 4px;
+  box-shadow: var(--custom-shadow);
+  margin: 10px 0 10px 0;
+  color: var(--blue-font-color);
+  text-decoration: none;
+  padding: 4px 8px;
+  background-color: white;
+}
+
+.welcome {
+  text-align: center;
+}
+
+#A {
+  display: block;
+}
+
 #clock {
   display: none;
 }
@@ -146,6 +170,14 @@ h3 {
   margin: 14px 0;
 }
 
+#search_error_message {
+  text-align: center;
+}
+
+#stock_name {
+  color: var(--grey-font-color);
+  font-weight: 900;
+}
 #topButton {
   display: none;
   position: fixed;
@@ -161,13 +193,11 @@ h3 {
   box-shadow: var(--custom-shadow);
   border-radius: 4px;
 }
-#A {
-  display: block;
-}
 
 #username {
   display: none;
 }
+
 @media (max-width: 991px) {
   body {
     font-size: 13px;

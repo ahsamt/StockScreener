@@ -8,6 +8,7 @@ class User(AbstractUser):
 
 class SavedSearch(models.Model):
     stock = models.CharField(max_length = 5)
+    stock_full = models.CharField(max_length = 20)
     date = models.DateTimeField(default = django.utils.timezone.now)
     notes = models.TextField(max_length=500, blank = True)
     user = models.ForeignKey("User", on_delete=models.CASCADE, related_name="watchlist")

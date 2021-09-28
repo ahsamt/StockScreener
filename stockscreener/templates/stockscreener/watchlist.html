@@ -61,10 +61,10 @@
   <!-- prettier-ignore -->
   {% if user.is_authenticated %}
 
-{% if watched_stocks %}
+  {% if watched_stocks %}
 
-  <h3 class="mb-3">Your watched stocks:</h3>
-  <div class="mb-3">
+  <h4 class="mb-3">Your watched stocks:</h4>
+  <div class="mb-4">
     {% for item in watched_stocks %}
     <a
       href="#watchedItem{{ item.stockID }}"
@@ -84,11 +84,11 @@
         <div class="card mb-4">
           <div class="card-body">
             <!-- prettier-ignore -->
-            {% include "stockscreener/stock_details.html" with stock=item.stock change=item.change closing_price=item.closing_price %}
+            {% include "stockscreener/stock_details.html" with stock=item.stock stockFull=item.stockFull change=item.change closing_price=item.closing_price %}
           </div>
         </div>
 
-        <h3>Your notes for {{ item.stock }}:</h3>
+        <h4>Your notes for {{ item.stock }}:</h4>
         <form
           class="edit_notes"
           id="editNotes{{ item.stockID }}"
