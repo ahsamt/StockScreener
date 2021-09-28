@@ -16,7 +16,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
+      <ul class="navbar-nav justify-content-end w-100">
         <li class="nav-item">
           <a class="nav-link" aria-current="page" href="{% url 'about' %}"
             >About</a
@@ -126,9 +126,8 @@
         <!-- prettier-ignore -->
         {% include "stockscreener/graphs.html" with graph1=item.graph1 graph2=item.graph2 %}
       </div>
-
-      <hr />
     </div>
+    <hr />
   </div>
   {% endfor %} {% else %}
   <p>You do not have any stocks in your watchlist</p>

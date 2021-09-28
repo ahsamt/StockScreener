@@ -86,7 +86,7 @@ def make_graph_2(data, stock, height, width):
     fig = go.Figure()
     fig.add_trace(go.Scatter(name=stock, x=data["Date"], y=data[stock]))
     fig.add_trace(go.Scatter(name="S&P 500", x=data["Date"], y=data["^GSPC"]))
-    fig.update_layout(title = f"{stock} trading vs S&P 500 trading over the past year - normalised values", template="seaborn", legend = {"orientation": "h","xanchor":"left"},
+    fig.update_layout(title = f"{stock} trading vs S&P 500 trading over the past year (normalised values)", template="seaborn", legend = {"orientation": "h","xanchor":"left"},
                 xaxis = {
                     "rangeselector": {
                         "buttons": buttons }}, width=width, height=height) 
