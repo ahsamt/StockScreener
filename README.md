@@ -100,23 +100,26 @@ This application is distinct from the other projects I have worked on in the CS5
 
 ## Stockscreener folder - key files included:
 
-├── models.py - contains models created for the application
-├── static
-│   └── stockscreener
-│   ├── index.js - JavaScript code used
-│   └── styles.css - CSS styling added
-├── templates
-│   └── stockscreener
-│   ├── about.html - template for the "About" page
-│   ├── graphs.html - child template displaying the 2 graphs used
-│   ├── index.html - template for the main "Search" page
-│   ├── layout.html - base template
-│   ├── login.html - template for the "Log In" page
-│   ├── register.html - template for the "Register" page
-│   ├── search_form.html - child template for the stock search form
-│   ├── stock_details.html - child template displaying stock information
-│   ├── ticker_list.html - template for the "Ticker List" page
-│   └── watchlist.html - template for the "Watchlist" page
-├── urls.py - URL routes used in the application
-├── utils.py - "helper" functions used in the views.py
-└── views.py - functions taking in Web requests and returning matching responses
+models.py - contains models created for the application
+urls.py - URL routes used in the application
+utils.py - "helper" functions used in the views.py
+views.py - functions taking in Web requests and returning matching responses
+
+_static/stockscreener folder_:
+
+- index.js - JavaScript code used
+- styles.css - CSS styling added
+
+_templates folder_:
+
+- stockscreener
+- about.html - template for the "About" page
+- graphs.html - child template displaying the 2 graphs used
+- index.html - template for the main "Search" page
+- layout.html - base template
+- login.html - template for the "Log In" page
+- register.html - template for the "Register" page
+- search_form.html - child template for the stock search form
+- stock_details.html - child template displaying stock information
+- ticker_list.html - template for the "Ticker List" page
+- watchlist.html - template for the "Watchlist" page
