@@ -47,18 +47,18 @@ The graph illustrates the movement of the stock’s price versus the **_S&P 500 
 
 _This section is included to meet the Final Project requirements for the Harvard University CS50’s Web Programming with Python and JavaScript course_
 
-1. **_Django_**
+1. **Django**
 
    - 2 models are created - User and SavedSearch;
 
-2. **_JavaScript_**
+2. **JavaScript**
 
    - Internal API routes are used to asynchronously update the database and fetch data without reloading the page
 
-3. **_Pandas_**
+3. **Pandas**
 
    - Pandas library is used to prepare data for the graphs
 
-4. **_Plotly_**
+4. **Plotly**
 
    - Plotly library Graph Objects are used to display the graphs
