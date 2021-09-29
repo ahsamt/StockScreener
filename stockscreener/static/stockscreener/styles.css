@@ -13,7 +13,7 @@
 body {
   background: var(--background-color);
   font-family: "Open Sans", sans-serif;
-  font-size: 15px;
+  font-size: 16px;
   padding-left: 0;
 }
 
@@ -59,6 +59,12 @@ h5 {
   font-size: 16px;
 }
 
+h6 {
+  color: var(--grey-font-color);
+  font-weight: bold;
+  text-decoration: underline;
+}
+
 li > .nav-link {
   margin: 0px 20px 0px 0px;
   font-weight: bolder;
@@ -84,6 +90,10 @@ textarea {
   text-decoration: underline;
 }
 
+.about {
+  line-height: 2;
+  padding: 30px 20px 20px 20px;
+}
 .abc_tickers {
   display: none;
   line-height: 2;
@@ -123,7 +133,10 @@ textarea {
 .price_change_green {
   color: var(--green-font-color);
 }
-
+.red {
+  color: var(--red-hover-color);
+  font-weight: bolder;
+}
 .search-form {
   display: block;
   margin: auto;
