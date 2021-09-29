@@ -45,18 +45,20 @@ The graph illustrates the movement of the stock’s price versus the **_S&P 500 
 
 ### Tools used to create the application:
 
-1. Django
+_This section is included to meet the Final Project requirements for the Harvard University CS50’s Web Programming with Python and JavaScript course_
+
+1. **_Django_**
 
    - 2 models are created - User and SavedSearch;
 
-2. JavaScript
+2. **_JavaScript_**
 
    - Internal API routes are used to asynchronously update the database and fetch data without reloading the page
 
-3. Pandas
+3. **_Pandas_**
 
    - Pandas library is used to prepare data for the graphs
 
-4. Plotly
+4. **_Plotly_**
 
-   - Plotly Graph Objects are used to display the graphs
+   - Plotly library Graph Objects are used to display the graphs
