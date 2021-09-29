@@ -38,3 +38,15 @@ The graph illustrates the movement of the stock’s price versus the **_S&P 500 
 - Click on a button with the relevant ticker name to go to the relevant section of the watchlist.
 - Type your notes on the performance of a specific stock in the "notes" area, then click "Save notes".
 - Click the "Remove from watchlist" button to remove stock from your watchlist.
+
+# Distinctiveness and Complexity
+
+### Tools used to create the application:
+
+1. Django
+
+   - 2 models are created - User and SavedSearch;
+
+2. JavaScript
+
+   - Internal API routes are used to asynchronously update the database and fetch data without reloading the page
