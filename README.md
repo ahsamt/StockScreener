@@ -47,13 +47,15 @@ The graph illustrates the movement of the stock’s price versus the **_S&P 500 
 
 _This section is included to meet the Final Project requirements for the Harvard University CS50’s Web Programming with Python and JavaScript course_
 
+This application is distinct from the other projects I have worked on in the CS50’s Web Programming with Python and JavaScript course as it focuses on exploring the tools required for accessing and analysing financial data. Please note that while the application allows the user to create a watchlist (which can be seen as being similar to the watchlist functionality in the "commerce" project), this is implemented via internal API route rather than with the help of HTTP requests.
+
 1. **Django**
 
    - 2 models are created - User and SavedSearch;
 
 2. **JavaScript**
 
-   - Internal API routes are used to asynchronously update the database and fetch data without reloading the page
+   - Internal API routes are used to asynchronously update the database and fetch data without reloading the page.
 
 3. **Pandas**
 

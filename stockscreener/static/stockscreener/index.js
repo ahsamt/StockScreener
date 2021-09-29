@@ -97,9 +97,6 @@ function update_watchlist(event) {
         if (result.message === "Search saved successfully") {
           event.target.dataset.stock_id = result.id;
           event.target.innerHTML = `Remove ${stock} from watchlist`;
-
-          // } else {
-          //   document.querySelector("#message").innerHTML = result.error;
         }
       });
   } else {
@@ -111,8 +108,6 @@ function update_watchlist(event) {
         if (stock !== undefined) {
           event.target.innerHTML = `Add ${stock} to watchlist`;
         }
-        //   } else {
-        //     document.querySelector("#message").innerHTML = result.error;
       }
     });
   }
