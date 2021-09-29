@@ -63,7 +63,7 @@ The graph illustrates the movement of the stock’s price versus the **_S&P 500 
 
    `pip install -r requirements.txt`
 
-5. Initialize the database
+5. Initialise the database
 
    `python manage.py makemigrations`
 
