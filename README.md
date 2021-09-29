@@ -44,26 +44,40 @@ The graph illustrates the movement of the stock’s price versus the **_S&P 500 
 ## How to run the application
 
 1. Navigate to the project folder
+
 2. Create virtual environment
+
    `virtualenv .`
-3. Activate virtual environmen
+
+3. Activate virtual environment
+
    - Linux and MacOS:
+
      `source myvenv/bin/activate`
+
    - Windows:
+
      `env\Scripts\activate.bat`
+
 4. Install all the required packages
+
    `pip install -r requirements.txt`
+
 5. Initialize the database
+
    `python manage.py makemigrations`
+
    `python manage.py migrate`
+
 6. Create superuser
+
    `python manage.py createsuperuser`
 
 ## Distinctiveness and Complexity
 
-### Tools used to create the application:
-
 _This section is included to meet the Final Project requirements for the Harvard University CS50’s Web Programming with Python and JavaScript course_
+
+### Tools used to create the application:
 
 This application is distinct from the other projects I have worked on in the CS50’s Web Programming with Python and JavaScript course as it focuses on exploring the tools required for accessing and analysing financial data. Please note that while the application allows the user to create a watchlist (which can be seen as being similar to the watchlist functionality in the "commerce" project), this is implemented via internal API route rather than with the help of HTTP requests.
 
