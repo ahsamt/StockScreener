@@ -45,19 +45,19 @@ The graph illustrates the movement of the stock’s price versus the **_S&P 500 
 
 1. Navigate to the project folder
 2. Create virtual environment
-   virtualenv .
+   `virtualenv .`
 3. Activate virtual environmen
    - Linux and MacOS:
-     source myvenv/bin/activate
+     `source myvenv/bin/activate`
    - Windows:
-     env\Scripts\activate.bat
+     `env\Scripts\activate.bat`
 4. Install all the required packages
-   pip install -r requirements.txt
+   `pip install -r requirements.txt`
 5. Initialize the database
-   python manage.py makemigrations
-   python manage.py migrate
+   `python manage.py makemigrations`
+   `python manage.py migrate`
 6. Create superuser
-   python manage.py createsuperuser
+   `python manage.py createsuperuser`
 
 ## Distinctiveness and Complexity
 
