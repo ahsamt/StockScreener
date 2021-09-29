@@ -41,6 +41,24 @@ The graph illustrates the movement of the stock’s price versus the **_S&P 500 
 - Type your notes on the performance of a specific stock in the "notes" area, then click "Save notes".
 - Click the "Remove from watchlist" button to remove stock from your watchlist.
 
+## How to run the application
+
+1. Navigate to the project folder
+2. Create virtual environment
+   virtualenv .
+3. Activate virtual environmen
+   - Linux and MacOS:
+     source myvenv/bin/activate
+   - Windows:
+     env\Scripts\activate.bat
+4. Install all the required packages
+   pip install -r requirements.txt
+5. Initialize the database
+   python manage.py makemigrations
+   python manage.py migrate
+6. Create superuser
+   python manage.py createsuperuser
+
 ## Distinctiveness and Complexity
 
 ### Tools used to create the application:
