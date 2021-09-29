@@ -50,3 +50,11 @@ The graph illustrates the movement of the stock’s price versus the **_S&P 500 
 2. JavaScript
 
    - Internal API routes are used to asynchronously update the database and fetch data without reloading the page
+
+3. Pandas
+
+   - Pandas library is used to prepare data for the graphs
+
+4. Plotly
+
+   - Plotly Graph Objects are used to display the graphs
