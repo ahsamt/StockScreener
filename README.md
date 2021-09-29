@@ -55,7 +55,7 @@ This application is distinct from the other projects I have worked on in the CS5
 
 2. **JavaScript**
 
-   - Internal API routes are used to asynchronously update the database and fetch data without reloading the page.
+   - Internal API routes are used to asynchronously update the database and fetch data.
 
 3. **Pandas**
 
