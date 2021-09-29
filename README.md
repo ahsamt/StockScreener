@@ -113,9 +113,8 @@ _static/stockscreener folder_:
 - index.js - JavaScript code used
 - styles.css - CSS styling added
 
-_templates folder_:
+_templates/stockscreener folder_:
 
-- stockscreener
 - about.html - template for the "About" page
 - graphs.html - child template displaying the 2 graphs used
 - index.html - template for the main "Search" page
