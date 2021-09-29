@@ -90,7 +90,8 @@ textarea {
   text-decoration: underline;
 }
 
-.about {
+.about,
+.ticker_list {
   line-height: 2;
   padding: 30px 20px 20px 20px;
 }
