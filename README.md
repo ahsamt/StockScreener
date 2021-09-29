@@ -101,8 +101,11 @@ This application is distinct from the other projects I have worked on in the CS5
 ## Stockscreener folder - key files included:
 
 models.py - contains models created for the application
+
 urls.py - URL routes used in the application
+
 utils.py - "helper" functions used in the views.py
+
 views.py - functions taking in Web requests and returning matching responses
 
 _static/stockscreener folder_:
