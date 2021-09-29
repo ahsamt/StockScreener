@@ -8,20 +8,21 @@ This application begins to pull together the fundamental components required to 
 - ability to run analytics on the updated historical data to search for specific criteria of interest.
 - ability to display to the user the stocks returned from such queries alongside relevant charts.
 
-The current implementation focuses on the latter function by allowing the user to create a watchlist of instruments. Once an instrument is added to the watchlist, relevant graphs will be displayed alongside a text area to allow the user to keep their own notes.
+The current implementation focuses on the latter function by allowing the user to create a watchlist of stocks. Once a stock is added to the watchlist, relevant graphs will be displayed alongside a text area to allow the user to keep their own notes.
 
-Analytics included on the graphs:
+Analytics included on the graphs are as follows:
 
 ### Graph 1
 
-The graph includes a **_20 day_** and a **_50 day moving average_**. Such analytics may be typically used by users to provide final decisions on whether to buy or sell a stock. Example of such use would include:
+The first graph includes a **20 day** and a **50 day moving average**. Such analytics may be typically utilised by users to provide final decisions on whether to buy or sell a stock. Examples of such use would include:
 
 If the 20 day moving average crosses above (below) the 50 day moving average then a signal to buy (sell) may be determined.
 If the stock rebounds off the 50 day moving average then this may be considered a signal to buy.
 
 ### Graph 2
 
-The graph illustrates the movement of the stock’s price versus the **_S&P 500 index_**. This may prove advantageous as a comparison of a stock versus a relevant index, and may often be utilised in order to determine whether the stock is trading in an abnormal fashion in comparison to its peers. Leaving aside the consideration that this may be due to unfavourable news related to the stock, some users of a stock screener may anticipate the stock moving back in line with the index. Therefore, if the stock had dropped in value, yet the index did not, a user may consider buying the stock (and potentially selling the index).
+The second graph illustrates the movement of the stock’s price versus the **S&P 500 index**. It may prove beneficial to compare a stock to a relevant index, and this may often be utilised in order to determine whether the stock is trading in an abnormal fashion in comparison to its peers. Leaving aside the consideration that this may be due to unfavourable news related to the stock, some users of a stock
+screener may anticipate the stock moving back in line with the index. Therefore, if the stock had dropped in value, yet the index had not, a user may consider buying the stock (and potentially selling the index).
 
 ## How to use StockScreener
 
@@ -79,7 +80,7 @@ _This section is included to meet the Final Project requirements for the Harvard
 
 ### Tools used to create the application:
 
-This application is distinct from the other projects I have worked on in the CS50’s Web Programming with Python and JavaScript course as it focuses on exploring the tools required for accessing and analysing financial data. Please note that while the application allows the user to create a watchlist (which can be seen as being similar to the watchlist functionality in the "commerce" project), this is implemented via internal API route rather than with the help of HTTP requests.
+This application is distinct from the other projects I have worked on in the CS50’s Web Programming with Python and JavaScript course as it focuses on exploring the tools required for accessing and analysing financial data. Please note that while the application allows the user to create a watchlist (which can be seen as being similar to the watchlist functionality in the "commerce" project), this is implemented in via an internal API route.
 
 1. **Django**
 
