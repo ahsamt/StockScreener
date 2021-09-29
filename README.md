@@ -70,10 +70,6 @@ screener may anticipate the stock moving back in line with the index. Therefore,
 
    `python manage.py migrate`
 
-6. Create superuser
-
-   `python manage.py createsuperuser`
-
 ## Distinctiveness and Complexity
 
 _This section is included to meet the Final Project requirements for the Harvard University CS50’s Web Programming with Python and JavaScript course_
