@@ -1,4 +1,6 @@
-# About this project
+#StockScreener
+
+## About this project
 
 This application begins to pull together the fundamental components required to build a stock screening tool. Such a tool can be divided into the following functions:
 
@@ -21,7 +23,7 @@ If the stock rebounds off the 50 day moving average then this may be considered 
 
 The graph illustrates the movement of the stock’s price versus the **_S&P 500 index_**. This may prove advantageous as a comparison of a stock versus a relevant index, and may often be utilised in order to determine whether the stock is trading in an abnormal fashion in comparison to its peers. Leaving aside the consideration that this may be due to unfavourable news related to the stock, some users of a stock screener may anticipate the stock moving back in line with the index. Therefore, if the stock had dropped in value, yet the index did not, a user may consider buying the stock (and potentially selling the index).
 
-# How to use StockScreener
+## How to use StockScreener
 
 ### Search page
 
@@ -39,7 +41,7 @@ The graph illustrates the movement of the stock’s price versus the **_S&P 500 
 - Type your notes on the performance of a specific stock in the "notes" area, then click "Save notes".
 - Click the "Remove from watchlist" button to remove stock from your watchlist.
 
-# Distinctiveness and Complexity
+## Distinctiveness and Complexity
 
 ### Tools used to create the application:
 
