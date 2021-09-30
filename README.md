@@ -86,13 +86,17 @@ This application is distinct from the other projects I have worked on in the CS5
 
    - Internal API routes are used to asynchronously update the database and fetch data.
 
-3. **Pandas**
+3.**Yfinance**
 
-   - Pandas library is used to prepare data for the graphs
+    - Yfanance (Python library) is used to access finance data
 
-4. **Plotly**
+4. **Pandas**
 
-   - Plotly library Graph Objects are used to display the graphs
+   - Pandas (Python library) is used to prepare data for the graphs
+
+5. **Plotly**
+
+   - Plotly (Python library) Graph Objects are used to display the graphs
 
 ## Stockscreener folder - key files included:
 
