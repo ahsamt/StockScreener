@@ -52,13 +52,13 @@
   </div>
 </nav>
 <div class="container">
-  <h2>Login</h2>
+  <h2 class="mt-3 mb-4">Login</h2>
 
   {% if message %}
   <div>{{ message }}</div>
   {% endif %}
 
-  <form action="{% url 'login' %}" method="post">
+  <form action="{% url 'login' %}" method="post" class="mb-4">
     {% csrf_token %}
     <div class="form-group">
       <input
@@ -77,7 +77,7 @@
         placeholder="Password"
       />
     </div>
-    <button type="submit" value="Login">Login</button>
+    <button class="mt-3" type="submit" value="Login">Login</button>
   </form>
 
   Don't have an account?

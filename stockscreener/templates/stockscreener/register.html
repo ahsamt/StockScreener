@@ -53,7 +53,7 @@
 </nav>
 
 <div class="container">
-  <h2>Register</h2>
+  <h2 class="mt-3 mb-4">Register</h2>
 
   {% if message %}
   <div>{{ message }}</div>
@@ -94,7 +94,7 @@
         placeholder="Confirm Password"
       />
     </div>
-    <button type="submit" value="Register">Register</button>
+    <button class="mt-3" type="submit" value="Register">Register</button>
   </form>
   <br />
   Already have an account? <a href="{% url 'login' %}">Log in</a>
