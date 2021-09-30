@@ -10,6 +10,12 @@ buttons = [{"count": 5, "label": "5D", "step": "day","stepmode": "backward"},
 {"count": 6, "label": "6M", "step": "month","stepmode": "backward"},
 {"count": 1, "label": "1Y", "step": "year","stepmode": "backward"},]
 
+def format_float(number):
+    """(float) => string
+    Takes a number that needs to be formatted, returns a string formatted as a float with 2 decimal places
+    """
+    string = '{0:.2f}'.format(number)
+    return string
 
 def get_SP_500_dict():
     """gets the latest S&P 500 list from Wikipedia 
@@ -71,15 +77,18 @@ def get_change_info(data, stock):
     closingPrice = data[stock].iloc[-1]
     previousPrice = data[stock].iloc[-2]
     priceDif = closingPrice - previousPrice
-    percDif = round(priceDif/previousPrice*100, 2) 
+    percDif = format_float(priceDif/previousPrice*100) 
+    print(percDif)
     if priceDif > 0:
         sign = "+"
         color = "green"
     else:
         sign = ""
         color = "red"
-    change = (f"{sign}${round(priceDif,2)}  ({sign}{percDif}%)", color)
-    return (round(closingPrice,2), change)   
+    priceDif = format_float(priceDif)
+    closingPrice = format_float(closingPrice)
+    change = (f"{sign}{priceDif} USD  ({sign}{percDif}%)", color)
+    return (closingPrice, change)   
 
 def make_graph_1(data, stock, height, width):
     """(pd DataFrame, string, integer, integer) => string
