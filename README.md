@@ -86,9 +86,9 @@ This application is distinct from the other projects I have worked on in the CS5
 
    - Internal API routes are used to asynchronously update the database and fetch data.
 
-3.**Yfinance**
+3. **Yfinance**
 
-    - Yfanance (Python library) is used to access finance data
+   - Yfanance (Python library) is used to access finance data
 
 4. **Pandas**
 
