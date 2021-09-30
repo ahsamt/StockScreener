@@ -1,7 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // get the clock working
-  setInterval(show_clock, 1000);
-
   // check on scroll if "back to top" button should be displayed
   window.addEventListener("scroll", () => top_scroll());
 
@@ -47,15 +44,11 @@ function format_time(time) {
 }
 
 function get_time() {
-  // get user's current time to start the clock
+  // get user's current time
   let now = new Date();
   let hours = format_time(now.getHours());
   let minutes = format_time(now.getMinutes());
   return `${hours}:${minutes}`;
-}
-
-function show_clock() {
-  document.getElementById("clock").innerHTML = get_time();
 }
 
 function update_notes(event) {
@@ -70,7 +63,7 @@ function update_notes(event) {
     }),
   }).then((response) => {
     if (response.ok) {
-      let time = document.getElementById("clock").innerHTML;
+      let time = get_time();
       document.getElementById(
         `messageNotes${stockID}`
       ).innerHTML = `Notes saved at ${time}`;

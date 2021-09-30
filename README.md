@@ -88,15 +88,15 @@ This application is distinct from the other projects I have worked on in the CS5
 
 3. **Yfinance**
 
-   - Yfanance (Python library) is used to access finance data
+   - Yfanance (Python library) is used to access finance data.
 
 4. **Pandas**
 
-   - Pandas (Python library) is used to prepare data for the graphs
+   - Pandas (Python library) is used to prepare data for the graphs.
 
 5. **Plotly**
 
-   - Plotly (Python library) Graph Objects are used to display the graphs
+   - Plotly (Python library) Graph Objects are used to display the graphs.
 
 ## Stockscreener folder - key files included:
 
