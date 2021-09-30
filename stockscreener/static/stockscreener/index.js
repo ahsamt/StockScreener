@@ -55,14 +55,14 @@ function get_time() {
 }
 
 function show_clock() {
-  document.querySelector("#clock").innerHTML = get_time();
+  document.getElementById("clock").innerHTML = get_time();
 }
 
 function update_notes(event) {
   // use internal API to update user's notes for specific stock
   event.preventDefault();
   let stockID = event.target.dataset.stock_id;
-  let updated_notes = document.querySelector(`#editContent${stockID}`).value;
+  let updated_notes = document.getElementById(`editContent${stockID}`).value;
   fetch(`/saved_searches/${stockID}`, {
     method: "PUT",
     body: JSON.stringify({
@@ -70,9 +70,9 @@ function update_notes(event) {
     }),
   }).then((response) => {
     if (response.ok) {
-      let time = document.querySelector("#clock").innerHTML;
-      document.querySelector(
-        `#messageNotes${stockID}`
+      let time = document.getElementById("clock").innerHTML;
+      document.getElementById(
+        `messageNotes${stockID}`
       ).innerHTML = `Notes saved at ${time}`;
     }
   });
@@ -82,7 +82,7 @@ function update_watchlist(event) {
   event.preventDefault();
   let stock = event.target.dataset.stock_name;
   let stockID = event.target.dataset.stock_id;
-  let user = document.querySelector("#username").innerHTML;
+  let user = document.getElementById("username").innerHTML;
 
   // Check via internal API if this stock is in user's watchlist
   if (stockID === "None") {
@@ -120,9 +120,9 @@ function remove_from_watchlist(event) {
   );
   if (confirm === "y") {
     update_watchlist(event);
-    document.querySelector(`#watchedItem${stockID}`).style.animationPlayState =
+    document.getElementById(`watchedItem${stockID}`).style.animationPlayState =
       "running";
-    document.querySelector(`#stock_link${stockID}`).style.display = "none";
+    document.getElementById(`stock_link${stockID}`).style.display = "none";
   } else if (confirm === "n") {
     alert("No problem, we'll keep it where it is!");
   } else {
@@ -135,6 +135,6 @@ function display_stock_list(event) {
   document.querySelectorAll(".abc_tickers").forEach((section) => {
     section.style.display = "none";
   });
-  document.querySelector(`#${event.target.dataset.letter}`).style.display =
+  document.getElementById(`${event.target.dataset.letter}`).style.display =
     "block";
 }
