@@ -61,7 +61,14 @@
 
   <div class="welcome">
     <h1>Welcome to StockScreener!</h1>
-    <p>Please enter the ticker below:</p>
+    <h4>Please enter a ticker below</h4>
+
+    <small
+      ><em>
+        (S&P 500 companies only)
+        <a href="/" class="question"
+          ><i class="far fa-question-circle"></i></a></em
+    ></small>
   </div>
 
   {% include "stockscreener/search_form.html" with stock=stock message=message%}

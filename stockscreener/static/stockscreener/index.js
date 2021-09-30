@@ -2,6 +2,13 @@ document.addEventListener("DOMContentLoaded", () => {
   // check on scroll if "back to top" button should be displayed
   window.addEventListener("scroll", () => top_scroll());
 
+  document.querySelector(".question").addEventListener("click", (event) => {
+    event.preventDefault();
+    alert(
+      "Please take a look at the Ticker List page of this application to see a full list of S&P 500 companies"
+    );
+  });
+
   // update watchlist when the relevant button is clicked on the index page
   document.querySelectorAll(".watchlist").forEach((watch_button) => {
     watch_button.addEventListener("click", (event) => update_watchlist(event));

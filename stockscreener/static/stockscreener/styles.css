@@ -35,7 +35,7 @@ button:hover {
 h1 {
   font-size: 30px;
   font-weight: 530;
-  padding: 60px 0px 7px 0px;
+  padding: 60px 0px 20px 0px;
 }
 
 h2 {
@@ -134,6 +134,17 @@ textarea {
 .price_change_green {
   color: var(--green-font-color);
 }
+
+.question {
+  font-size: 13px;
+  padding-bottom: 5px;
+  color: var(--grey-font-color);
+  transition: ease-in-out 200ms;
+}
+
+.question:hover {
+  color: var(--red-hover-color);
+}
 .red {
   color: var(--red-hover-color);
   font-weight: bolder;
@@ -180,6 +191,7 @@ textarea {
 
 .welcome {
   text-align: center;
+  margin-bottom: 15px;
 }
 
 #A {
