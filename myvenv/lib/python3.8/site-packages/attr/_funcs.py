@@ -343,7 +343,7 @@ def evolve(inst, **changes):
     return cls(**changes)
 
 
-def resolve_types(cls, globalns=None, localns=None, attribs=None):
+def resolve_types(cls, globalns=None, localns=None):
     """
     Resolve any strings and forward annotations in type annotations.
 
@@ -360,13 +360,10 @@ def resolve_types(cls, globalns=None, localns=None, attribs=None):
     :param type cls: Class to resolve.
     :param Optional[dict] globalns: Dictionary containing global variables.
     :param Optional[dict] localns: Dictionary containing local variables.
-    :param Optional[list] attribs: List of attribs for the given class.
-        This is necessary when calling from inside a ``field_transformer``
-        since *cls* is not an ``attrs`` class yet.
 
     :raise TypeError: If *cls* is not a class.
     :raise attr.exceptions.NotAnAttrsClassError: If *cls* is not an ``attrs``
-        class and you didn't pass any attribs.
+        class.
     :raise NameError: If types cannot be resolved because of missing variables.
 
     :returns: *cls* so you can use this function also as a class decorator.
@@ -374,8 +371,6 @@ def resolve_types(cls, globalns=None, localns=None, attribs=None):
         the decorator has to come in the line **before** `attr.s`.
 
     ..  versionadded:: 20.1.0
-    ..  versionadded:: 21.1.0 *attribs*
-
     """
     try:
         # Since calling get_type_hints is expensive we cache whether we've
@@ -385,7 +380,7 @@ def resolve_types(cls, globalns=None, localns=None, attribs=None):
         import typing
 
         hints = typing.get_type_hints(cls, globalns=globalns, localns=localns)
-        for field in fields(cls) if attribs is None else attribs:
+        for field in fields(cls):
             if field.name in hints:
                 # Since fields have been frozen we must work around it.
                 _obj_setattr(field, "type", hints[field.name])
