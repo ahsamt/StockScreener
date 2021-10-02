@@ -1,1 +1,1 @@
-web:gunicorn sctockscreener.wsgi --log-file -
+web: gunicorn stockscreener.wsgi --log-file -
