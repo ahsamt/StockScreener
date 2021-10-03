@@ -78,7 +78,7 @@ pyzmq==22.2.1
 requests==2.26.0
 Send2Trash==1.8.0
 six==1.16.0
-sqlparse==0.4.1
+sqlparse==0.4.2
 submit50==3.1.0
 tenacity==8.0.1
 termcolor==1.1.0
