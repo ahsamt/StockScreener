@@ -27,7 +27,7 @@ from .utils import get_change_info, make_graph_1, make_graph_2, prep_graph_data,
 sp500 = get_SP_500_dict()
 
 class StockForm(forms.Form):
-    stock = forms.CharField(label = 'Stock name', max_length=5, widget=forms.TextInput(attrs={'autofocus': True})) 
+    stock = forms.CharField(label = 'Stock name', max_length=5, widget=forms.TextInput(attrs={'autofocus': True, 'placeholder':'AAPL'})) 
     
 def index(request):
 
