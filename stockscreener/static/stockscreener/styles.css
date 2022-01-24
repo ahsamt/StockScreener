@@ -242,6 +242,7 @@ textarea {
     text-align: center;
   }
 }
+
 @keyframes hide {
   0% {
     opacity: 1;
@@ -258,7 +259,7 @@ textarea {
 
   100% {
     opacity: 0;
-    height: 0;
+    height: 0px;
     line-height: 0px;
     padding: 0px;
     margin-bottom: 0px;
